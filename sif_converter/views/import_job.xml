@@ -42,13 +42,14 @@
         <field name="model">sif_converter.import_job</field>
         <field name="arch" type="xml">
             <search string="Import Jobs">
-                <field name="company_id" filter_domain="[(company_id', 'ilike', 'self')]"/>
+                <field name="customer_name"/>
+                <field name="short_description" />
             </search>
             <separator />
-            <filter name="filter_create_date" date="create_date" />
-            <group expand="1" string="Group By">
-                <filter string="Job Position" name="job_id" context="{'group_by': 'job_id'}" />
-            </group>
+<!--            <filter name="filter_create_date" date="create_date" />-->
+<!--            <group expand="1" string="Group By">-->
+<!--                <filter string="Job Position" name="job_id" context="{'group_by': 'job_id'}" />-->
+<!--            </group>-->
         </field>
     </record>
     
