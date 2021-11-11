@@ -24,7 +24,9 @@
     'depends': ['base'],
 
     # always loaded
-    'data': [],
+    'data': [
+        'views/import_job.xml'
+    ],
     # only loaded in demonstration mode
     'demo': [],
 }

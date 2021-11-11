@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <menuitem id="sif_converter_root"
+              name="Sif Converter"
+              sequence="10" />
+    <!--<menuitem id="sale_order_menu"
+              name="Orders"
+              parent="sale_menu_root"
+              sequence="2" />-->
+</odoo>
