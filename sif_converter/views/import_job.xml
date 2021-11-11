@@ -14,6 +14,12 @@
                         <div t-attf-class="oe_kanban_global_click">
                             <div class="oe_kanban_details">
                                 <ul>
+                                    <li>
+                                        <field name="customer_name" />
+                                    </li>
+                                    <li>
+                                        <field name="short_description" />
+                                    </li>
                                 </ul>
                             </div>
                         </div>
