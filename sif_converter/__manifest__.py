@@ -3,8 +3,7 @@
     'name': "sif_converter",
 
     'summary': """
-        Short (1 phrase/line) summary of the module's purpose, used as
-        subtitle on modules listing or apps.openerp.com""",
+        Module to convert sif files to an estimate""",
 
     'description': """
         Long description of module's purpose
