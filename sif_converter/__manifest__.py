@@ -1,15 +1,30 @@
 # -*- coding: utf-8 -*-
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
 {
-    'name' : 'Sif Converter',
-    'version' : '0.1',
-    'summary': 'Sif Converter',
-    'sequence': 10,
-    'description': """Module to import sif files into estimates""",
-    'category': 'Accounting/Accounting',
-    'website': 'https://www.odoo.com/app/billing',
-    'depends' : ['sale_management'],
-    'data': [],
-    'demo': [],
+    'name': "sif_converter",
+
+    'summary': """
+        Short (1 phrase/line) summary of the module's purpose, used as
+        subtitle on modules listing or apps.openerp.com""",
+
+    'description': """
+        Long description of module's purpose
+    """,
+
+    'author': "My Company",
+    'website': "http://www.yourcompany.com",
+
+    # Categories can be used to filter modules in modules listing
+    # Check https://github.com/odoo/odoo/blob/14.0/odoo/addons/base/data/ir_module_category_data.xml
+    # for the full list
+    'category': 'Uncategorized',
+    'version': '0.1',
     'license': 'LGPL-3',
+
+    # any module necessary for this one to work correctly
+    'depends': ['base'],
+
+    # always loaded
+    'data': [],
+    # only loaded in demonstration mode
+    'demo': [],
 }
