@@ -7,4 +7,5 @@ class import_job(models.Model):
     _description = "Import Job"
 
     customer_name = fields.Char(string='Customer Name', required=True, translate=True)
+    short_description = fields.Char(string="Short Description")
     
