@@ -7,7 +7,9 @@
         <field name="arch" type="xml">
             <form>
                 <sheet>
-                    <field name="customer_name" />
+                    <group>
+                        <field name="customer_name" />
+                    </group>
                 </sheet>
                 <!--
                 <group>
