@@ -15,10 +15,10 @@
                             <div class="oe_kanban_details">
                                 <ul>
                                     <li>
-                                        <field name="customer_name" />
+                                        Customer Name: <field name="customer_name" />
                                     </li>
                                     <li>
-                                        <field name="short_description" />
+                                        Short Description: <field name="short_description" />
                                     </li>
                                 </ul>
                             </div>
