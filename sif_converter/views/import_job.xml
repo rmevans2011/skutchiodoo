@@ -21,7 +21,7 @@
                 <sheet>
                     <group>
                         <field name="customer_name" />
-                        <field name="short_description"
+                        <field name="short_description" />
                     </group> 
                     <!-- Split Main Group Into Two Groups -->
                     <!--
@@ -34,6 +34,21 @@
                     -->
                 </sheet>
             </form>
+        </field>
+    </record>
+
+    <record id="import_job_search" model="ir.ui.view">
+        <field name="name">sif_converter.import_job.search</field>
+        <field name="model">sif_converter.import_job.report</field>
+        <field name="arch" type="xml">
+            <search string="Import Jobs">
+                <field name="company_id" filter_domain="[(company_id', 'ilike', 'self')]"/>
+            </search>
+            <separator />
+            <filter name="filter_create_date" date="create_date" />
+            <group expand="1" string="Group By">
+                <filter string="Job Position" name="job_id" context="{'group_by': 'job_id'}" />
+            </group>
         </field>
     </record>
     
