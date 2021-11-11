@@ -6,7 +6,9 @@
         <field name="model">sif_converter.import_job</field>
         <field name="arch" type="xml">
             <form>
-                <field name="customer_name" />
+                <sheet>
+                    <field name="customer_name" />
+                </sheet>
                 <!--
                 <group>
                     <group>
