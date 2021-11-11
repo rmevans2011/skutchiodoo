@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
+    
+    <record id="import_job_form" model="ir.ui.view">
+        <field name="name">sif_converter.import_job.form</field>
+        <field name="model">sif_converter.import_job</field>
+        <field name="arch" type="xml">
+            <form>
+                <field name="customer_name" />
+                <!--
+                <group>
+                    <group>
+                    </group>
+                    <group>
+                    </group>
+                </group>
+                -->
+            </form>
+        </field>
+    </record>
+    
     <record id="sif_converter_import_job" model="ir.actions.act_window">
             <field name="name">Import Jobs</field>
             <field name="type">ir.actions.act_window</field>
