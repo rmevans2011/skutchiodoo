@@ -39,7 +39,7 @@
 
     <record id="import_job_search" model="ir.ui.view">
         <field name="name">sif_converter.import_job.search</field>
-        <field name="model">sif_converter.import_job.report</field>
+        <field name="model">sif_converter.import_job</field>
         <field name="arch" type="xml">
             <search string="Import Jobs">
                 <field name="company_id" filter_domain="[(company_id', 'ilike', 'self')]"/>
