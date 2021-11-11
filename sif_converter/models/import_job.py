@@ -2,7 +2,7 @@
 from odoo import api, fields, models
 
 
-class ImportJob(models.Model):
+class import_job(models.Model):
     _name = "sif_converter.import_job"
     _description = "Import Job"
 
