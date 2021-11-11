@@ -17,6 +17,7 @@
     <menuitem id="sif_converter_imports_import_job"
               name="Import Jobs"
               parent="sif_converter_imports_root"
+              action="sif_converter_import_job"
               sequence="11" />
     
     <menuitem id="sif_converter_products_matched_products"
