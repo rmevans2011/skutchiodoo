@@ -8,6 +8,7 @@
             <tree>
                 <field name="id" />
                 <field name="customer_name" />
+                <field name="short_description" />
             </tree>
         </field>
     </record>
@@ -20,6 +21,7 @@
                 <sheet>
                     <group>
                         <field name="customer_name" />
+                        <field name="short_description"
                     </group> 
                     <!-- Split Main Group Into Two Groups -->
                     <!--
