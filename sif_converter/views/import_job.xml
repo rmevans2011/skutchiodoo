@@ -3,8 +3,8 @@
     <menuitem id="sif_converter_root"
               name="Sif Converter"
               sequence="10" />
-    <!--<menuitem id="sale_order_menu"
-              name="Orders"
-              parent="sale_menu_root"
-              sequence="2" />-->
+    <menuitem id="sif_converter_import_job_root"
+              name="Import Sif File"
+              parent="sif_converter_root"
+              sequence="2" />
 </odoo>
