@@ -34,5 +34,7 @@ class import_job(models.Model):
     @api.model
     def create(self, vals):
         _logger.info("Saved import_job")
+        _logger.info(self.customer_id)
+        _logger.info(self.customer_name)
         _logger.info(self.csv_file)
         return super(import_job, self).create(vals)
