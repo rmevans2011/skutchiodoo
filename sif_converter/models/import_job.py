@@ -36,12 +36,6 @@ class import_job(models.Model):
 
     @api.model
     def create(self, vals):
-        _logger.info("Saved import_job")
-        _logger.info(self.customer_id)
-        _logger.info(self.customer_name)
-        _logger.info(self.csv_file)
-        _logger.info("=======Logging Vals=======")
-        _logger.info(vals['csv_file'])
         decoded_csv_file = base64.b64decode(vals['csv_file'])
         data = io.StringIO(decoded_csv_file.decode("unicode_escape"))
         csv_reader = csv.reader(data)
