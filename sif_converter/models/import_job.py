@@ -43,7 +43,7 @@ class import_job(models.Model):
         _logger.info("=======Logging Vals=======")
         _logger.info(vals['csv_file'])
         decoded_csv_file = base64.b64decode(vals['csv_file'])
-        data = io.StringIO(decoded_csv_file.decode("mbcs"))
+        data = io.StringIO(decoded_csv_file.decode("unicode_escape"))
         csv_reader = csv.reader(data)
         for row in csv_reader:
             _logger.info(row)
