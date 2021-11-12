@@ -7,6 +7,7 @@ class import_job(models.Model):
     _inherit = ["mail.thread", 'mail.activity.mixin']
     _description = "Import Job"
 
+    customer_id = fields.Many2one('res.partner', string='Customer', required=True, tracking=True)
     customer_name = fields.Char(string='Customer Name', required=True, translate=True, tracking=True)
     short_description = fields.Char(string="Short Description", tracking=True)
     state = fields.Selection([
