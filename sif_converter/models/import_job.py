@@ -43,7 +43,7 @@ class import_job(models.Model):
         _logger.info(vals['csv_file'])
         decode_csv_file = base64.b64decode(vals['csv_file'])
 
-        with open(decode_csv_file) as csv_file:
+        with open(vals['csv_file'], 'rb') as csv_file:
             csvreader = csv.reader(csv_file)
             for row in csvreader:
                 _logger.info(row)
