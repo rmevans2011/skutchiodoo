@@ -46,6 +46,9 @@
         <field name="model">sif_converter.import_job</field>
         <field name="arch" type="xml">
             <form>
+                <header>
+                    <field name="state" widget="statusbar"/>
+                </header>
                 <sheet>
                     <group>
                         <field name="customer_name" />
