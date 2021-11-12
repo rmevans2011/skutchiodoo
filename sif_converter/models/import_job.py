@@ -23,3 +23,6 @@ class import_job(models.Model):
 
     def action_reset(self):
         self.state = 'needs_import'
+
+    def action_cancel(self):
+        self.state = 'cancel'
