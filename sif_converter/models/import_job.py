@@ -36,20 +36,28 @@ class import_job(models.Model):
 
     @api.model
     def create(self, vals):
+        # Create Import Job
+        res = super(import_job, self).create(vals)
+        _logger.info(res)
+        _logger.info(res.id)
+        import_job_id = res.id
+
+        #Process csv file
         decoded_csv_file = base64.b64decode(vals['csv_file'])
         data = io.StringIO(decoded_csv_file.decode("unicode_escape"))
         csv_reader = csv.reader(data)
+        next(csv_reader)
         for row in csv_reader:
             _logger.info(row)
             _logger.info(row[4].split())
             _logger.info(row[5].split('|'))
+            import_row_vals = {
+                'import_job_id': import_job_id,
+                'sif_sku': row[2],
+                'sif_options': row[4]
+            }
+            self.env['sif_converter.import_item'].create(import_row_vals)
 
         if not vals.get('short_description'):
             vals['short_description'] = "Some text"
-
-        res = super(import_job, self).create(vals)
-
-        _logger.info(res)
-        _logger.info(res.id)
-
         return res
