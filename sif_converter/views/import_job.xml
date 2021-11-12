@@ -48,6 +48,8 @@
         <field name="arch" type="xml">
             <form>
                 <header>
+                    <button name="action_reset" id="button_reset" string="Reset to new import" class="btn-primary"
+                            type="object"/>
                     <button name="action_confirm" id="button_confirm" string="Confirm" class="btn-primary"
                             type="object"/>
                     <button name="action_estimate" id="button_estimate" string="Create Estimate" class="btn-primary"

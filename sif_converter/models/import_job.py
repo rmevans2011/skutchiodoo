@@ -20,3 +20,6 @@ class import_job(models.Model):
 
     def action_estimate(self):
         self.state = 'estimate_ready'
+
+    def action_reset(self):
+        self.state = 'needs_import'
