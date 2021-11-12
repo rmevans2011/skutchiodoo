@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from odoo import api, fields, models
 import logging
+import base64
+import csv
 _logger = logging.getLogger(__name__)
 
 
@@ -39,4 +41,7 @@ class import_job(models.Model):
         _logger.info(self.csv_file)
         _logger.info("=======Logging Vals=======")
         _logger.info(vals['csv_file'])
+        decode_csv_file = base64.b64decode(vals['csv_file'])
+        _logger.info(decode_csv_file)
+
         return super(import_job, self).create(vals)
