@@ -37,6 +37,7 @@
                 <field name="id" />
                 <field name="customer_name" />
                 <field name="short_description" />
+                <field name="state" />
             </tree>
         </field>
     </record>
