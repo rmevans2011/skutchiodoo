@@ -12,6 +12,7 @@ class import_job(models.Model):
     customer_id = fields.Many2one('res.partner', string='Customer', required=True, tracking=True)
     customer_name = fields.Char(string='Customer Name', required=True, translate=True, tracking=True)
     short_description = fields.Char(string="Short Description", tracking=True)
+    csv_file = fields.Bin(string="CSV File")
     state = fields.Selection([
         ('new_import', 'New Import Job'), ('needs_matching', 'Needs Matching'),
         ('estimate_ready', 'Ready to Create Estimate'), ('done', 'Done'),
@@ -32,6 +33,5 @@ class import_job(models.Model):
 
     @api.model
     def create(self, vals):
-        _logger.debug("Saved import_job")
         _logger.info("Saved import_job")
         return super(import_job, self).create(vals)
