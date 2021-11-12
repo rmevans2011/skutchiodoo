@@ -22,7 +22,7 @@ class import_job(models.Model):
         self.state = 'estimate_ready'
 
     def action_reset(self):
-        self.state = 'needs_import'
+        self.state = 'new_import'
 
     def action_cancel(self):
         self.state = 'cancel'
