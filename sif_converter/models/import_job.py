@@ -44,4 +44,8 @@ class import_job(models.Model):
             _logger.info(row[4].split())
             _logger.info(row[5].split('|'))
 
-        return super(import_job, self).create(vals)
+        res = super(import_job, self).create(vals)
+
+        _logger.info(res)
+
+        return res
