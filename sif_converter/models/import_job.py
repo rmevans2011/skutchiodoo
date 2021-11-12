@@ -47,5 +47,7 @@ class import_job(models.Model):
         csv_reader = csv.reader(data)
         for row in csv_reader:
             _logger.info(row)
+            _logger.info(row[4].split())
+            _logger.info(row[5].split('|'))
 
         return super(import_job, self).create(vals)
