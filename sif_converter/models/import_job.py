@@ -17,3 +17,6 @@ class import_job(models.Model):
 
     def action_confirm(self):
         self.state = 'needs_matching'
+
+    def action_estimate(self):
+        self.state = 'estimate_ready'

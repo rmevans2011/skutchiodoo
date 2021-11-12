@@ -50,6 +50,8 @@
                 <header>
                     <button name="action_confirm" id="button_confirm" string="Confirm" class="btn-primary"
                             type="object"/>
+                    <button name="action_estimate" id="button_estimate" string="Create Estimate" class="btn-primary"
+                            type="object"/>
                     <field name="state" widget="statusbar"
                            statusbar_visible="new_estimate,needs_matching,estimate_ready,done"/>
                 </header>
