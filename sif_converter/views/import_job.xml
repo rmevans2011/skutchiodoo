@@ -49,12 +49,16 @@
             <form>
                 <header>
                     <button name="action_reset" id="button_reset" string="Reset to new import" class="btn-primary"
+                            states="needs_matching,estimate_ready,done,cancel"
                             type="object"/>
                     <button name="action_confirm" id="button_confirm" string="Confirm" class="btn-primary"
+                            states="new_import,estimate_ready,done,cancel"
                             type="object"/>
                     <button name="action_estimate" id="button_estimate" string="Create Estimate" class="btn-primary"
+                            states="new_import,needs_matching,done,cancel"
                             type="object"/>
                     <button name="action_cancel" id="button_cancel" string="Cancel Import"
+                            states="new_import,needs_matching,estimate_ready"
                             type="object" />
                     <field name="state" widget="statusbar"
                            statusbar_visible="new_estimate,needs_matching,estimate_ready,done"/>
