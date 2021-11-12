@@ -48,7 +48,8 @@
         <field name="arch" type="xml">
             <form>
                 <header>
-                    <field name="state" widget="statusbar" options="{'clickable': '1'}"/>
+                    <field name="state" widget="statusbar" options="{'clickable': '1'}"
+                           statusbar_visible="new_estimate,needs_matching,estimate_ready,done"/>
                 </header>
                 <sheet>
                     <group>
