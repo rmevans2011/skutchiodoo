@@ -50,5 +50,6 @@ class import_job(models.Model):
         res = super(import_job, self).create(vals)
 
         _logger.info(res)
+        _logger.info(res.id)
 
         return res
