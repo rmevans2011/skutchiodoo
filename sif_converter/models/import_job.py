@@ -3,6 +3,7 @@ from odoo import api, fields, models
 import logging
 import base64
 import csv
+import io
 _logger = logging.getLogger(__name__)
 
 
@@ -41,11 +42,10 @@ class import_job(models.Model):
         _logger.info(self.csv_file)
         _logger.info("=======Logging Vals=======")
         _logger.info(vals['csv_file'])
-        decode_csv_file = base64.b64decode(vals['csv_file'])
-
-        with open(vals['csv_file'], 'rb') as csv_file:
-            csvreader = csv.reader(csv_file)
-            for row in csvreader:
-                _logger.info(row)
+        decoded_csv_file = base64.b64decode(vals['csv_file'])
+        data = io.StringIO(decoded_csv_file.decode("ANSI", 'repalce'))
+        csv_reader = csv.reader(data)
+        for row in csv_reader:
+            _logger.info(row)
 
         return super(import_job, self).create(vals)
