@@ -119,6 +119,19 @@
                 </p>
             </field>
         </record>
+
+    <record id="view_import_item_tree" model="ir.ui.view">
+        <field name="name">sif_converter.import_item.tree</field>
+        <field name="model">sif_converter.import_item</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="id" />
+                <field name="import_job_id" />
+                <field name="sif_sku" />
+                <field name="sif_options" />
+            </tree>
+        </field>
+    </record>
     
     <menuitem id="sif_converter_root"
               name="Sif Converter"
@@ -139,6 +152,12 @@
               parent="sif_converter_imports_root"
               action="sif_converter_import_job"
               sequence="11" />
+
+    <menuitem id="sif_converter_imports_import_item"
+              name="Imported Items"
+              parent="sif_converter_imports_root"
+              action="sif_converter_import_item"
+              sequence="12" />
     
     <menuitem id="sif_converter_products_matched_products"
               name="Matched Products"
