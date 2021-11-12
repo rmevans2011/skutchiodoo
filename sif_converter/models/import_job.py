@@ -13,4 +13,4 @@ class import_job(models.Model):
         ('new_import', 'New Import Job'), ('needs_matching', 'Needs Matching')
         ('estimate_ready', 'Ready to Create Estimate'), ('done', 'Done'),
         ('cancel', 'Cancelled')
-    ], string="Status")
+    ], default="new_import", string="Status")
