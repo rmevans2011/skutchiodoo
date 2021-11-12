@@ -44,6 +44,9 @@ class import_job(models.Model):
             _logger.info(row[4].split())
             _logger.info(row[5].split('|'))
 
+        if not vals.get('short_description'):
+            vals['short_description'] = "Some text"
+
         res = super(import_job, self).create(vals)
 
         _logger.info(res)
