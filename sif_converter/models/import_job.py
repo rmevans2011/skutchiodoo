@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 from odoo import api, fields, models
+import logging
+_logger = logging.getLogger(__name__)
 
 
 class import_job(models.Model):
@@ -30,5 +32,5 @@ class import_job(models.Model):
 
     @api.model
     def create(self, vals):
-        print("Created Import Job")
+        _logger.debug("Saved import_job")
         return super(import_job, self).create(vals)
