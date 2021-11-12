@@ -16,4 +16,4 @@ class import_job(models.Model):
     ], default="new_import", string="Status")
 
     def action_confirm(self):
-        print("button")
+        self.state = 'needs_matching'
