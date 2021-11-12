@@ -38,5 +38,5 @@ class import_job(models.Model):
         _logger.info(self.customer_name)
         _logger.info(self.csv_file)
         _logger.info("=======Logging Vals=======")
-        _logger.info(vals)
+        _logger.info(vals['csv_file'])
         return super(import_job, self).create(vals)
