@@ -48,6 +48,8 @@
         <field name="arch" type="xml">
             <form>
                 <header>
+                    <button name="action_confirm" id="button_confirm" string="Confirm" class="btn-primary"
+                            type="object"/>
                     <field name="state" widget="statusbar" options="{'clickable': '1'}"
                            statusbar_visible="new_estimate,needs_matching,estimate_ready,done"/>
                 </header>

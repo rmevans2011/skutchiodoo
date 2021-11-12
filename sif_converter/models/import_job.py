@@ -14,3 +14,6 @@ class import_job(models.Model):
         ('estimate_ready', 'Ready to Create Estimate'), ('done', 'Done'),
         ('cancel', 'Cancelled')
     ], default="new_import", string="Status")
+
+    def action_confirm(self):
+        print("button")
