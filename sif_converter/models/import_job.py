@@ -27,3 +27,8 @@ class import_job(models.Model):
 
     def action_cancel(self):
         self.state = 'cancel'
+
+    @api.model
+    def create(self, vals):
+        print("Created Import Job")
+        return super(import_job, self).create(vals)
