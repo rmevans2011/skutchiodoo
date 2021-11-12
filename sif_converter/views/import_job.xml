@@ -65,6 +65,7 @@
                 </header>
                 <sheet>
                     <group>
+                        <field name="customer_id" />
                         <field name="customer_name" />
                         <field name="short_description" />
                     </group> 
