@@ -42,7 +42,7 @@ class import_job(models.Model):
         _logger.info(res)
         _logger.info(res.id)
         import_job_id = res.id
-        Product = self.env('product.template')
+        #Product = self.env('product.template')
 
         #Process csv file
         decoded_csv_file = base64.b64decode(vals['csv_file'])
