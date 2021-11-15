@@ -42,6 +42,7 @@ class import_job(models.Model):
         _logger.info(res)
         _logger.info(res.id)
         import_job_id = res.id
+        Product = self.env('product.template')
 
         #Process csv file
         decoded_csv_file = base64.b64decode(vals['csv_file'])
@@ -60,6 +61,7 @@ class import_job(models.Model):
                 'needs_matching': False
             }
             self.env['import_job.import_item.lines'].create(import_row_vals)
+            _logger.info(Product.search(('default_code', '=', 'E-COM11')))
 
         if not vals.get('short_description'):
             vals['short_description'] = "Some text"
