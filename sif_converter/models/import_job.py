@@ -57,7 +57,7 @@ class import_job(models.Model):
                 'sif_sku': row[2],
                 'sif_options': row[4]
             }
-            self.env['sif_converter.import_item'].create(import_row_vals)
+            self.env['import_job.import_item.lines'].create(import_row_vals)
 
         if not vals.get('short_description'):
             vals['short_description'] = "Some text"
