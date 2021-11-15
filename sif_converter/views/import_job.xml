@@ -79,15 +79,15 @@
                             </group>
                         </group>
                     -->
+                    <notebook>
+                        <page string="Imported Items" name="imported_items">
+
+                        </page>
+                        <page string="Items To Match" name="items_to_match">
+
+                        </page>
+                    </notebook>
                 </sheet>
-                <notebook>
-                    <page string="Imported Items" name="imported_items">
-
-                    </page>
-                    <page string="Items To Match" name="items_to_match">
-
-                    </page>
-                </notebook>
                 <div class="oe_chatter">
                     <field name="message_follower_ids" />
                     <field name="activity_ids" />
