@@ -82,7 +82,10 @@
                     <notebook>
                         <page string="Imported Items" name="imported_items">
                             <field name="import_item_ids">
-
+                                <tree>
+                                    <field name="sif_sku" />
+                                    <field name="sif_options" />
+                                </tree>
                             </field>
                         </page>
                         <page string="Items To Match" name="items_to_match">
