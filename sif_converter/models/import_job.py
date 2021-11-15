@@ -55,7 +55,8 @@ class import_job(models.Model):
             import_row_vals = {
                 'import_job_id': import_job_id,
                 'sif_sku': row[2],
-                'sif_options': row[4]
+                'sif_options': row[4],
+                'needs_matching': False
             }
             self.env['import_job.import_item.lines'].create(import_row_vals)
 
