@@ -86,6 +86,10 @@
                                     <field name="sif_sku" />
                                     <field name="sif_options" />
                                 </tree>
+                                <form>
+                                    <field name="sif_sku" />
+                                    <field name="sif_options" />
+                                </form>
                             </field>
                         </page>
                         <page string="Items To Match" name="items_to_match">
