@@ -1,3 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_sif_converter_import_job,sif_converter.import_job,model_sif_converter_import_job,,1,1,1,1
 access_import_job_import_item_lines,import_job.import_item.lines,model_import_job_import_item_lines,,1,1,1,1
+access_sif_converter_matched_product,sif_converter.matched_product,model_sif_converter_matched_product,,1,1,1,1
