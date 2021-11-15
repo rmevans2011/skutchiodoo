@@ -81,7 +81,9 @@
                     -->
                     <notebook>
                         <page string="Imported Items" name="imported_items">
+                            <field name="import_item_ids">
 
+                            </field>
                         </page>
                         <page string="Items To Match" name="items_to_match">
 
