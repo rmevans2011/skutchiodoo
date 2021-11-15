@@ -21,6 +21,7 @@ class import_job(models.Model):
         ('estimate_ready', 'Ready to Create Estimate'), ('done', 'Done'),
         ('cancel', 'Cancelled')
     ], default="new_import", string="Status", tracking=True)
+    import_item_ids = fields.One2many('import_job.import_item.lines', 'import_job_id', string="Imported Items")
 
     def action_confirm(self):
         self.state = 'needs_matching'
