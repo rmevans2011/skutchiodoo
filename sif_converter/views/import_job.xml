@@ -131,7 +131,7 @@
     <record id="sif_converter_import_item" model="ir.actions.act_window">
             <field name="name">Import Items</field>
             <field name="type">ir.actions.act_window</field>
-            <field name="res_model">sif_converter.import_item</field>
+            <field name="res_model">import_job.import_item.lines</field>
             <field name="view_mode">tree</field>
             <!--<field name="search_view_id" ref="sale_order_view_search_inherit_sale"/>
             <field name="context">{}</field>
