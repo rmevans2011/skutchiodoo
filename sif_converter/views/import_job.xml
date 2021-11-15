@@ -145,7 +145,7 @@
 
     <record id="view_import_item_tree" model="ir.ui.view">
         <field name="name">sif_converter.import_item.tree</field>
-        <field name="model">sif_converter.import_item</field>
+        <field name="model">import_job.import_item.lines</field>
         <field name="arch" type="xml">
             <tree>
                 <field name="id" />
