@@ -42,7 +42,7 @@ class import_job(models.Model):
         _logger.info(res)
         _logger.info(res.id)
         import_job_id = res.id
-        #Product = self.env('product.template')
+        Product = self.env['product.template']
 
         #Process csv file
         decoded_csv_file = base64.b64decode(vals['csv_file'])
@@ -53,12 +53,19 @@ class import_job(models.Model):
             _logger.info(row)
             _logger.info(row[4].split())
             _logger.info(row[5].split('|'))
+            needs_matching = False
+
+            if(len(Product.search([('default_code', '=', row[2])])) == 0):
+                # Continue needs matching logic
+                needs_matching = True
+
+
             import_row_vals = {
                 'import_job_id': import_job_id,
                 'sif_sku': row[2],
                 'sif_options': row[4],
                 'generic_code': row[32],
-                'needs_matching': False
+                'needs_matching': needs_matching
             }
             self.env['import_job.import_item.lines'].create(import_row_vals)
             _logger.info(len(self.env['product.product'].search([('default_code', '=', 'E-COM111')])))
