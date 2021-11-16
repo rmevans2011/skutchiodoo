@@ -43,6 +43,7 @@ class import_job(models.Model):
         _logger.info(res.id)
         import_job_id = res.id
         Product = self.env['product.template']
+        Matched_Product = self.env['sif_converter.matched_product']
 
         #Process csv file
         decoded_csv_file = base64.b64decode(vals['csv_file'])
@@ -57,7 +58,8 @@ class import_job(models.Model):
 
             if(len(Product.search([('default_code', '=', row[2])])) == 0):
                 # Continue needs matching logic
-                needs_matching = True
+                if(len(Matched_Product.search([('sif_sku', '=', row[2]),('sif_options', '=', row[4])]))):
+                    needs_matching = True
 
 
             import_row_vals = {
