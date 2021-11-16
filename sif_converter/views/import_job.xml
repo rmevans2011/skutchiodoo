@@ -167,21 +167,6 @@
                 </p>
             </field>
     </record>
-
-    <record id="sif_converter_matched_products" model="ir.actions.act_window">
-            <field name="name">Matched Products</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">sif_converter.matched_product</field>
-            <field name="view_mode">tree</field>
-            <!--<field name="search_view_id" ref="sale_order_view_search_inherit_sale"/>
-            <field name="context">{}</field>
-            <field name="domain">[('state', 'not in', ('draft', 'sent', 'cancel'))]</field>-->
-            <field name="help" type="html">
-                <p class="o_view_nocontent_smiling_face">
-                    Create a new import job, the first step of a new sale!
-                </p>
-            </field>
-    </record>
     
     <menuitem id="sif_converter_root"
               name="Sif Converter"
