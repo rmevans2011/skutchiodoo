@@ -58,7 +58,7 @@ class import_job(models.Model):
 
             if(len(Product.search([('default_code', '=', row[2])])) == 0):
                 # Continue needs matching logic
-                if(len(Matched_Product.search([('sif_sku', '=', row[2]),('sif_options', '=', row[4])]))):
+                if(len(Matched_Product.search([('sif_sku', '=', row[2]),('sif_options', '=', row[4])])) == 0):
                     needs_matching = True
 
 
