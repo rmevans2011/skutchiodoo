@@ -11,4 +11,4 @@ class matched_product(models.Model):
 
     sif_sku = fields.Char(string="Sif Sku")
     sif_options = fields.Char(string="Sif Options")
-    product_id = fields.Many2one('product.template', string="Matched Product")
+    product_id = fields.Many2one('product.product', string="Matched Product")
