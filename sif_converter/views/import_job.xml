@@ -94,7 +94,7 @@
                             </field>
                         </page>
                         <page string="Items To Match" name="items_to_match">
-                            <field name="import_item_ids" filter_domain="[('needs_matching', '=', True)]">
+                            <field name="import_item_ids" domain="[('needs_matching', '=', True)]">
                                 <tree>
                                     <field name="sif_sku" />
                                     <field name="sif_options" />
