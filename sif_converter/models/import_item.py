@@ -20,4 +20,5 @@ class import_item(models.Model):
         _logger.info(vals)
         _logger.info(self)
         res = super(import_item, self).write(vals)
+        _logger.info(res)
         return res
