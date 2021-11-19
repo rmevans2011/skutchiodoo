@@ -68,7 +68,7 @@ class import_job(models.Model):
                 # Continue needs matching logic
                 if(len(Matched_Product.search([('sif_sku', '=', row[2]),('sif_options', '=', row[4])])) == 0):
                     needs_matching = True
-                    new_status = needs_matching
+                    new_status = "needs_matching"
 
 
             import_row_vals = {
