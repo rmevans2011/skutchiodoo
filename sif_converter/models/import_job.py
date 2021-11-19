@@ -26,7 +26,7 @@ class import_job(models.Model):
                                          string="Needs Matching Imported Items", compute='_compute_nm_import_item_ids')
 
     def _compute_nm_import_item_ids(self):
-        needs_matching_items = self.env('import_job.import_item.lines').search([('import_job_id', '=', self.id),
+        needs_matching_items = self.env['import_job.import_item.lines'].search([('import_job_id', '=', self.id),
                                                                                 ('needs_matching', '=', True)])
         self.nm_import_item_ids = needs_matching_items
 
