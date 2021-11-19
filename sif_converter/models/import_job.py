@@ -86,6 +86,7 @@ class import_job(models.Model):
                     import_row_vals['matched_product_id'] = mp_search.id
             else:
                 _logger.info("Matched regular product")
+                _logger.info(p_search.id)
                 import_row_vals['product_id'] = p_search.id
 
             self.env['import_job.import_item.lines'].create(import_row_vals)
