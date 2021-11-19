@@ -12,9 +12,11 @@ class import_item(models.Model):
     sif_options = fields.Char(string='Sif Options', required=True)
     generic_code = fields.Char(string='Generic Code', required=True)
     needs_matching = fields.Boolean(string='Needs to be matched')
+    product_id = fields.Many2one('product.product', string='Matched Product')
 
     @api.model
     def write(self, vals):
+        _logger.info(vals)
         res = super(import_item, self).write(vals)
         count = self.env['import_job.import_item.lines'].search_count([('import_job_id', '=', self.import_job_id.id),
                                                                        ('needs_matching', '=', True)])
