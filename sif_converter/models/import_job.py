@@ -95,8 +95,7 @@ class import_job(models.Model):
                                     next_code = True
                                 if (opt == 'WB'):
                                     search_sku += '-WB'
-
-
+                _logger.info("Completed Search SKU: " + search_sku)
             else:
                 _logger.info("No Need To Build SKU")
 
@@ -104,6 +103,7 @@ class import_job(models.Model):
                 'import_job_id': import_job_id,
                 'sif_sku': row[2],
                 'sif_options': row[4].replace('\xa0', '|')[:-1],
+                'search_sku': search_sku,
                 'qty': row[1],
                 'generic_code': row[32],
                 'needs_matching': False

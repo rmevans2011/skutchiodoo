@@ -11,6 +11,7 @@ class import_item(models.Model):
     sif_sku = fields.Char(string='Sif Sku', required=True, translate=True)
     sif_options = fields.Char(string='Sif Options', required=True)
     generic_code = fields.Char(string='Generic Code', required=True)
+    search_sku = fields.Char(string='Search SKU')
     qty = fields.Integer(string='Quantity')
     needs_matching = fields.Boolean(string='Needs to be matched')
     product_id = fields.Many2one('product.product', string='Matched Product')
