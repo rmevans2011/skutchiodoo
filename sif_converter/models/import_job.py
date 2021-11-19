@@ -81,7 +81,7 @@ class import_job(models.Model):
             self.env['import_job.import_item.lines'].create(import_row_vals)
             _logger.info(len(self.env['product.product'].search([('default_code', '=', 'E-COM111')])))
 
-        self.state = new_status
+        res.state = new_status
         if not vals.get('short_description'):
             vals['short_description'] = "Some text"
         return res
