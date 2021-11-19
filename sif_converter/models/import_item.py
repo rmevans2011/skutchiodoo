@@ -13,7 +13,7 @@ class import_item(models.Model):
     generic_code = fields.Char(string='Generic Code', required=True)
     needs_matching = fields.Boolean(string='Needs to be matched')
 
-    @api.multi
+    @api.model
     def write(self, vals):
         _logger.info("Called import_item update")
         res = super(import_item, self).write(vals)
