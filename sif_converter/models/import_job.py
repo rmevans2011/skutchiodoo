@@ -109,7 +109,7 @@ class import_job(models.Model):
                 'needs_matching': False
             }
 
-            p_search = Product.search([('default_code', '=', row[2])])
+            p_search = Product.search([('default_code', '=', search_sku)])
             if(len(p_search) == 0):
                 # Continue needs matching logic
                 mp_search = Matched_Product.search([('sif_sku', '=', row[2]),
