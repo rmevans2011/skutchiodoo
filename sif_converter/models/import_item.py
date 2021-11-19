@@ -18,6 +18,10 @@ class import_item(models.Model):
     def write(self, vals):
         _logger.info(vals)
         _logger.info("Current Matched Product: " + str(self.product_id))
+        if('product_id' in vals):
+            _logger.info('New Product Matched')
+        else:
+            _logger.info('Not set')
         res = super(import_item, self).write(vals)
         count = self.env['import_job.import_item.lines'].search_count([('import_job_id', '=', self.import_job_id.id),
                                                                        ('needs_matching', '=', True)])
