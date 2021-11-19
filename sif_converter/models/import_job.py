@@ -74,7 +74,7 @@ class import_job(models.Model):
             import_row_vals = {
                 'import_job_id': import_job_id,
                 'sif_sku': row[2],
-                'sif_options': row[4],
+                'sif_options': row[4].replace('\xa0','|'),
                 'generic_code': row[32],
                 'needs_matching': needs_matching
             }
