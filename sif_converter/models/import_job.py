@@ -22,6 +22,11 @@ class import_job(models.Model):
         ('cancel', 'Cancelled')
     ], default="new_import", string="Status", tracking=True)
     import_item_ids = fields.One2many('import_job.import_item.lines', 'import_job_id', string="Imported Items")
+    nm_import_item_ids = fields.One2many('import_job.import_item.lines', 'import_job_id',
+                                         string="Needs Matching Imported Items", compute='_compute_nm_import_item_ids')
+
+    def _compute_nm_import_items_ids(self):
+        return self.import_item_ids
 
     def action_confirm(self):
         self.state = 'needs_matching'
