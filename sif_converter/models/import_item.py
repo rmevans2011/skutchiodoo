@@ -15,13 +15,10 @@ class import_item(models.Model):
 
     @api.model
     def write(self, vals):
-        _logger.info("Called import_item update")
-        _logger.info("Import Job")
-        _logger.info(vals)
-        _logger.info(self.import_job_id.id)
-
         res = super(import_item, self).write(vals)
         count = self.env['import_job.import_item.lines'].search_count([('import_job_id', '=', self.import_job_id.id),
                                                                        ('needs_matching', '=', True)])
-        _logger.info("Items still needing matching: " + str(count))
+        if(count == 0):
+            _logger.info("Ready to create estimate. Updating status of import job")
+            self.import_job_id.state = "estimate_ready"
         return res
