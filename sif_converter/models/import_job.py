@@ -25,7 +25,7 @@ class import_job(models.Model):
     nm_import_item_ids = fields.One2many('import_job.import_item.lines', 'import_job_id',
                                          string="Needs Matching Imported Items", compute='_compute_nm_import_item_ids')
 
-    def _compute_nm_import_items_ids(self):
+    def _compute_nm_import_item_ids(self):
         return self.import_item_ids
 
     def action_confirm(self):
