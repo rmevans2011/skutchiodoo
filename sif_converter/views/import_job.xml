@@ -86,21 +86,6 @@
                                     <field name="sif_sku" />
                                     <field name="sif_options" />
                                     <field name="product_id" />
-                                </tree>
-                                <form>
-                                    <group>
-                                        <field name="sif_sku" />
-                                        <field name="sif_options" />
-                                        <field name="product_id" />
-                                    </group>
-                                </form>
-                            </field>
-                        </page>
-                        <page string="Items To Match" name="items_to_match">
-                            <field name="nm_import_item_ids" >
-                                <tree>
-                                    <field name="sif_sku" />
-                                    <field name="sif_options" />
                                     <field name="needs_matching" />
                                 </tree>
                                 <form>
@@ -112,6 +97,22 @@
                                 </form>
                             </field>
                         </page>
+<!--                        <page string="Items To Match" name="items_to_match">-->
+<!--                            <field name="nm_import_item_ids" >-->
+<!--                                <tree>-->
+<!--                                    <field name="sif_sku" />-->
+<!--                                    <field name="sif_options" />-->
+<!--                                    <field name="needs_matching" />-->
+<!--                                </tree>-->
+<!--                                <form>-->
+<!--                                    <group>-->
+<!--                                        <field name="sif_sku" />-->
+<!--                                        <field name="sif_options" />-->
+<!--                                        <field name="product_id" />-->
+<!--                                    </group>-->
+<!--                                </form>-->
+<!--                            </field>-->
+<!--                        </page>-->
                     </notebook>
                 </sheet>
                 <div class="oe_chatter">
