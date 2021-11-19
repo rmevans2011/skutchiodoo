@@ -24,6 +24,7 @@ class import_item(models.Model):
             else:
                 _logger.info(len(self.product_id))
                 _logger.info('New Product Matched')
+                vals['needs_matching'] = False
         else:
             _logger.info('Not set')
         res = super(import_item, self).write(vals)
