@@ -62,23 +62,31 @@ class import_job(models.Model):
             _logger.info(row)
             _logger.info(row[4].split())
             _logger.info(row[5].split('|'))
-            needs_matching = False
-
-            if(len(Product.search([('default_code', '=', row[2])])) == 0):
-                # Continue needs matching logic
-                if(len(Matched_Product.search([('sif_sku', '=', row[2]),
-                                               ('sif_options', '=', row[4].replace('\xa0', '|'))])) == 0):
-                    needs_matching = True
-                    new_status = "needs_matching"
-
 
             import_row_vals = {
                 'import_job_id': import_job_id,
                 'sif_sku': row[2],
-                'sif_options': row[4].replace('\xa0','|'),
+                'sif_options': row[4].replace('\xa0', '|'),
                 'generic_code': row[32],
-                'needs_matching': needs_matching
+                'needs_matching': False
             }
+
+            p_search = Product.search([('default_code', '=', row[2])])
+            if(len(p_search) == 0):
+                # Continue needs matching logic
+                mp_search = Matched_Product.search([('sif_sku', '=', row[2]),
+                                                   ('sif_options', '=', row[4].replace('\xa0', '|'))])
+                if(len(mp_search) == 0):
+                    import_row_vals['needs_matching'] = True
+                    new_status = "needs_matching"
+                else:
+                    import_row_vals['product_id'] = mp_search.product_id.id
+            else:
+                import_row_vals['product_id'] = p_search.id
+
+
+
+
             self.env['import_job.import_item.lines'].create(import_row_vals)
             _logger.info(len(self.env['product.product'].search([('default_code', '=', 'E-COM111')])))
 
