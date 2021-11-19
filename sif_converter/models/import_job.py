@@ -50,7 +50,7 @@ class import_job(models.Model):
         _logger.info(res)
         _logger.info(res.id)
         import_job_id = res.id
-        Product = self.env['product.template']
+        Product = self.env['product.product']
         Matched_Product = self.env['sif_converter.matched_product']
 
         #Process csv file
