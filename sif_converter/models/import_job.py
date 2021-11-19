@@ -26,7 +26,7 @@ class import_job(models.Model):
                                          string="Needs Matching Imported Items", compute='_compute_nm_import_item_ids')
 
     def _compute_nm_import_item_ids(self):
-        return self.import_item_ids
+        self.nm_import_item_ids = self.import_item_ids
 
     def action_confirm(self):
         self.state = 'needs_matching'
