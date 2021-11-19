@@ -40,6 +40,7 @@ class import_item(models.Model):
                     vals['needs_matching'] = False
                 else:
                     _logger.info("Update matched_product")
+                    self.matched_product_id.product_id = vals['product_id']
         else:
             _logger.info('Not set')
         res = super(import_item, self).write(vals)
