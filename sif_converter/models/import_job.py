@@ -82,6 +82,7 @@ class import_job(models.Model):
                     new_status = "needs_matching"
                 else:
                     import_row_vals['product_id'] = mp_search.product_id.id
+                    import_row_vals['matched_product_id'] = mp_search.id
             else:
                 import_row_vals['product_id'] = p_search.id
 
