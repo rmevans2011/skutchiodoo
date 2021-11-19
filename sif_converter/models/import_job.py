@@ -45,6 +45,7 @@ class import_job(models.Model):
     @api.model
     def create(self, vals):
         # Create Import Job
+        new_status = "estimate_ready"
         res = super(import_job, self).create(vals)
         _logger.info(res)
         _logger.info(res.id)
@@ -67,6 +68,7 @@ class import_job(models.Model):
                 # Continue needs matching logic
                 if(len(Matched_Product.search([('sif_sku', '=', row[2]),('sif_options', '=', row[4])])) == 0):
                     needs_matching = True
+                    new_status = needs_matching
 
 
             import_row_vals = {
@@ -79,6 +81,7 @@ class import_job(models.Model):
             self.env['import_job.import_item.lines'].create(import_row_vals)
             _logger.info(len(self.env['product.product'].search([('default_code', '=', 'E-COM111')])))
 
+        self.state = new_status
         if not vals.get('short_description'):
             vals['short_description'] = "Some text"
         return res
