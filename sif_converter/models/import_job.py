@@ -71,9 +71,34 @@ class import_job(models.Model):
         csv_reader = csv.reader(data)
         next(csv_reader)
         for row in csv_reader:
+            next_code = False
+            search_sku = row[2]
             _logger.info(row)
             _logger.info(row[4].split())
             _logger.info(row[5].split('|'))
+
+            options = row[4].replace('\xa0', '|').split('|')
+            if(len(options) > 0):
+                _logger.info("Need To Build SKU")
+                ent = row[36]
+                pline = row[0]
+                if(ent == 'SKU'):
+                    if(pline == 'ECS'):
+                        for opt in options:
+                            if(next_code):
+                                next_code = False
+                                search_sku += '-'+opt
+                            else:
+                                if(opt == 'FAB'):
+                                    next_code = True
+                                if (opt == 'PET'):
+                                    next_code = True
+                                if (opt == 'WB'):
+                                    search_sku += '-WB'
+
+
+            else:
+                _logger.info("No Need To Build SKU")
 
             import_row_vals = {
                 'import_job_id': import_job_id,
