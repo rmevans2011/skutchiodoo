@@ -26,6 +26,7 @@ class import_item(models.Model):
             else:
                 _logger.info(len(self.product_id))
                 _logger.info('New Product Matched')
+                _logger.info(len(self.matched_product_id))
                 if(len(self.matched_product_id) == 0):
                     _logger.info("Create new matched product")
                     matched_vals = {
