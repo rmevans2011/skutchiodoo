@@ -13,6 +13,7 @@ class import_item(models.Model):
     generic_code = fields.Char(string='Generic Code', required=True)
     needs_matching = fields.Boolean(string='Needs to be matched')
     product_id = fields.Many2one('product.product', string='Matched Product')
+    matched_product_id = fields.Many2one('sif_converter.matched_product', string='Matched Product Internal')
 
     @api.model
     def write(self, vals):
@@ -24,6 +25,13 @@ class import_item(models.Model):
             else:
                 _logger.info(len(self.product_id))
                 _logger.info('New Product Matched')
+                matched_vals = {
+                    'sif_sku': self.sif_sku,
+                    'sif_options': self.sif_options,
+                    'product_id': vals['product_id']
+                }
+                m_id = self.env['sif_converter.matched_product'].create(matched_vals)
+                _logger.info(m_id.id)
                 vals['needs_matching'] = False
         else:
             _logger.info('Not set')
