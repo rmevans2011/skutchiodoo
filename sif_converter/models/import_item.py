@@ -18,5 +18,6 @@ class import_item(models.Model):
         _logger.info("Called import_item update")
         _logger.info("Import Job")
         _logger.info(vals)
+        _logger.info(self)
         res = super(import_item, self).write(vals)
         return res
