@@ -85,9 +85,6 @@ class import_job(models.Model):
             else:
                 import_row_vals['product_id'] = p_search.id
 
-
-
-
             self.env['import_job.import_item.lines'].create(import_row_vals)
             _logger.info(len(self.env['product.product'].search([('default_code', '=', 'E-COM111')])))
 

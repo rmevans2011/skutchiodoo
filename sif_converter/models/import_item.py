@@ -26,14 +26,18 @@ class import_item(models.Model):
             else:
                 _logger.info(len(self.product_id))
                 _logger.info('New Product Matched')
-                matched_vals = {
-                    'sif_sku': self.sif_sku,
-                    'sif_options': self.sif_options,
-                    'product_id': vals['product_id']
-                }
-                m_id = self.env['sif_converter.matched_product'].create(matched_vals)
-                _logger.info(m_id.id)
-                vals['needs_matching'] = False
+                if(len(self.matched_product_id) == 0):
+                    _logger.info("Create new matched product")
+                    matched_vals = {
+                        'sif_sku': self.sif_sku,
+                        'sif_options': self.sif_options,
+                        'product_id': vals['product_id']
+                    }
+                    m_id = self.env['sif_converter.matched_product'].create(matched_vals)
+                    vals['matched_product_id'] = m_id.id
+                    vals['needs_matching'] = False
+                else:
+                    _logger.info("Update matched_product")
         else:
             _logger.info('Not set')
         res = super(import_item, self).write(vals)
