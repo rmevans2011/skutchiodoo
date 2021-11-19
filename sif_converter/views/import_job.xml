@@ -90,6 +90,7 @@
                                 <form>
                                     <field name="sif_sku" />
                                     <field name="sif_options" />
+                                    <field name="needs_matching" />
                                 </form>
                             </field>
                         </page>
