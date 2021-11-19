@@ -85,12 +85,14 @@
                                 <tree>
                                     <field name="sif_sku" />
                                     <field name="sif_options" />
-                                    <field name="needs_matching" />
+                                    <field name="product_id" />
                                 </tree>
                                 <form>
-                                    <field name="sif_sku" />
-                                    <field name="sif_options" />
-                                    <field name="needs_matching" />
+                                    <group>
+                                        <field name="sif_sku" />
+                                        <field name="sif_options" />
+                                        <field name="needs_matching" />
+                                    </group>
                                 </form>
                             </field>
                         </page>
@@ -101,6 +103,13 @@
                                     <field name="sif_options" />
                                     <field name="needs_matching" />
                                 </tree>
+                                <form>
+                                    <group>
+                                        <field name="sif_sku" />
+                                        <field name="sif_options" />
+                                        <field name="product_id" />
+                                    </group>
+                                </form>
                             </field>
                         </page>
                     </notebook>
