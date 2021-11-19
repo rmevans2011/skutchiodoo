@@ -31,6 +31,10 @@ class import_job(models.Model):
         self.nm_import_item_ids = needs_matching_items
 
     def action_confirm(self):
+        order_vals = {
+            'partner_id': self.customer_id.id
+        }
+        self.env['sale.order'].create(order_vals)
         self.state = 'needs_matching'
 
     def action_estimate(self):
