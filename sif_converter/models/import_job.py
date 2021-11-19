@@ -67,6 +67,7 @@ class import_job(models.Model):
                 'import_job_id': import_job_id,
                 'sif_sku': row[2],
                 'sif_options': row[4].replace('\xa0', '|'),
+                'qty': row[1],
                 'generic_code': row[32],
                 'needs_matching': False
             }
