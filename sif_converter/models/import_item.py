@@ -19,9 +19,9 @@ class import_item(models.Model):
         _logger.info("Import Job")
         _logger.info(vals)
         _logger.info(self.import_job_id.id)
+
+        res = super(import_item, self).write(vals)
         count = self.env['import_job.import_item.lines'].search_count([('import_job_id', '=', self.import_job_id.id),
                                                                        ('needs_matching', '=', True)])
         _logger.info("Items still needing matching: " + str(count))
-        res = super(import_item, self).write(vals)
-        _logger.info(res)
         return res
