@@ -19,7 +19,11 @@ class import_item(models.Model):
         _logger.info(vals)
         _logger.info("Current Matched Product: " + str(self.product_id))
         if('product_id' in vals):
-            _logger.info('New Product Matched')
+            if(self.product_id.id == vals['product_id']):
+                "Same Product no need to change"
+            else:
+                _logger.info(len(self.product_id))
+                _logger.info('New Product Matched')
         else:
             _logger.info('Not set')
         res = super(import_item, self).write(vals)
