@@ -12,3 +12,9 @@ class import_item(models.Model):
     sif_options = fields.Char(string='Sif Options', required=True)
     generic_code = fields.Char(string='Generic Code', required=True)
     needs_matching = fields.Boolean(string='Needs to be matched')
+
+    @api.multi
+    def write(self, vals):
+        _logger.info("Called import_item update")
+        res = super(import_item, self).write(vals)
+        return res
