@@ -40,7 +40,7 @@ class import_job(models.Model):
             item_vals = {
                 'order_id': order.id,
                 'product_uom_qty': line_item.qty,
-                'product_id': self.product_id.id
+                'product_id': line_item.product_id.id
             }
             self.env['sale.order.line'].create(item_vals)
         self.state = 'needs_matching'
