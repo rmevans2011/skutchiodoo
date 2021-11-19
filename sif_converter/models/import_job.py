@@ -34,7 +34,15 @@ class import_job(models.Model):
         order_vals = {
             'partner_id': self.customer_id.id
         }
-        self.env['sale.order'].create(order_vals)
+        order = self.env['sale.order'].create(order_vals)
+        line_items = self.import_item_ids
+        for line_item in line_items:
+            item_vals = {
+                'order_id': order.id,
+                'product_uom_qty': line_item.qty,
+                'product_id': self.product_id.id
+            }
+            self.env['sale.order.line'].create(item_vals)
         self.state = 'needs_matching'
 
     def action_estimate(self):
