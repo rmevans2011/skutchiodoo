@@ -17,6 +17,6 @@ class import_item(models.Model):
     def write(self, vals):
         _logger.info("Called import_item update")
         _logger.info("Import Job")
-        _logger.info(vals['import_job_id'])
+        _logger.info(vals)
         res = super(import_item, self).write(vals)
         return res
