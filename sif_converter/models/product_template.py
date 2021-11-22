@@ -66,7 +66,7 @@ class product_template(models.Model):
                         current_variants_to_activate += existing_variants[combination]
                     else:
                         current_variants_to_create.append(tmpl_id._prepare_variant_values(combination))
-                        if len(current_variants_to_create) > 1000:
+                        if len(current_variants_to_create) > 100000:
                             raise UserError(_(
                                 'The number of variants to generate is too high. '
                                 'You should either not generate variants for each combination or generate them on demand from the sales order. '
