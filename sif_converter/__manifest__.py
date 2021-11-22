@@ -29,7 +29,8 @@
         'security/ir.model.access.csv',
         'views/import_job.xml',
         'views/matched_product.xml',
-        'views/sale.xml'
+        'views/sale.xml',
+        'views/product_attribute.xml'
     ],
     # only loaded in demonstration mode
     'demo': [],
