@@ -9,7 +9,7 @@ from odoo.osv import expression
 _logger = logging.getLogger(__name__)
 
 class product_template(models.Model):
-    _inherit = "product.product"
+    _inherit = "product.template"
 
     def _create_variant_ids(self):
         self.flush()
