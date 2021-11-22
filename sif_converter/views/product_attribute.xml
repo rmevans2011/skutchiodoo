@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
-    <record id = "view_order_form_inherit" model="ir.ui.view">
+    <record id = "view_attribute_form_inherit" model="ir.ui.view">
         <field name="name">product.attribute.inherited</field>
         <field name="model">product.attribute</field>
         <field name="inherit_id" ref="sale.view_order_form" />
@@ -12,7 +12,7 @@
         </field>
     </record>
 
-    <record id = "view_order_tree_inherit" model="ir.ui.view">
+    <record id = "view_attribute_tree_inherit" model="ir.ui.view">
         <field name="name">product.attribute.inherited</field>
         <field name="model">product.attribute</field>
         <field name="inherit_id" ref="sale.view_order_form" />
