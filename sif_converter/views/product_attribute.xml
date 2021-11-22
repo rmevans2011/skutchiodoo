@@ -4,7 +4,7 @@
     <record id = "view_attribute_form_inherit" model="ir.ui.view">
         <field name="name">product.attribute.inherited</field>
         <field name="model">product.attribute</field>
-        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="inherit_id" ref="product.product_attribute_view_form" />
         <field name="arch" type="xml">
             <field name="name" position="after">
                 <field name="friendly_name" />
@@ -15,7 +15,7 @@
     <record id = "view_attribute_tree_inherit" model="ir.ui.view">
         <field name="name">product.attribute.inherited</field>
         <field name="model">product.attribute</field>
-        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="inherit_id" ref="product.attribute_tree_view" />
         <field name="arch" type="xml">
             <field name="name" position="after">
                 <field name="friendly_name" />
