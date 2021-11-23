@@ -17,6 +17,7 @@ class ProductProduct(models.Model):
         for prod in products:
             _logger.info("Logging Product")
             _logger.info(prod)
+            _logger.info(prod.attribute_line_ids)
         # `_get_variant_id_for_combination` depends on existing variants
         self.clear_caches()
         return products
