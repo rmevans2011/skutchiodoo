@@ -10,6 +10,8 @@ class ProductProduct(models.Model):
     def create(self, vals_list):
         _logger.info("Override Create Method for Products")
         for vals in vals_list:
+            _logger.info("Logging vals")
+            _logger.info(vals)
             self.product_tmpl_id._sanitize_vals(vals)
         products = super(ProductProduct, self.with_context(create_product_product=True)).create(vals_list)
         # `_get_variant_id_for_combination` depends on existing variants
