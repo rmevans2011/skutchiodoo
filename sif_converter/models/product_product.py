@@ -14,6 +14,9 @@ class ProductProduct(models.Model):
             _logger.info(vals)
             self.product_tmpl_id._sanitize_vals(vals)
         products = super(ProductProduct, self.with_context(create_product_product=True)).create(vals_list)
+        for prod in products:
+            _logger.info("Logging Product")
+            _logger.info(prod)
         # `_get_variant_id_for_combination` depends on existing variants
         self.clear_caches()
         return products
