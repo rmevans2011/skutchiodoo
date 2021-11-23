@@ -15,14 +15,12 @@ class ProductProduct(models.Model):
             self.product_tmpl_id._sanitize_vals(vals)
         products = super(ProductProduct, self.with_context(create_product_product=True)).create(vals_list)
         for prod in products:
-            _logger.info("Logging Product")
-            _logger.info(prod)
-            _logger.info(prod.attribute_line_ids)
-            for i in range(len(prod.attribute_line_ids)):
-                _logger.info(prod.attribute_line_ids[i].attribute_id.name + ": " +
-                             prod.product_template_attribute_value_ids[i].product_attribute_value_id.name)
+            variant_sku = prod.product_tmpl_id.variant_sku
             if prod.has_configurable_attributes:
-                _logger.info("Configured product")
+                variant_description = ""
+                for i in range(len(prod.attribute_line_ids)):
+                    variant_sku += "-" + prod.product_template_attribute_value_ids[i].product_attribute_value_id.name.split(' ')[0]
+                _logger.info("Variant SKU: " + variant_sku)
         # `_get_variant_id_for_combination` depends on existing variants
         self.clear_caches()
         return products
