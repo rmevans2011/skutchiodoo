@@ -18,7 +18,7 @@ class ProductProduct(models.Model):
             _logger.info("Logging Product")
             _logger.info(prod)
             _logger.info(prod.attribute_line_ids)
-            for i in range(prod.attribute_line_ids):
+            for i in range(len(prod.attribute_line_ids)):
                 _logger.info(prod.attribute_line_ids[i].attribute_id.name + ": " +
                              prod.product_template_attribute_value_ids[i].product_attribute_value_id.name)
             if prod.has_configurable_attributes:
