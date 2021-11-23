@@ -10,11 +10,10 @@ class ProductProduct(models.Model):
     def create(self, vals_list):
         _logger.info("Override Create Method for Products")
         for vals in vals_list:
-            _logger.info("Logging vals")
-            _logger.info(vals)
             self.product_tmpl_id._sanitize_vals(vals)
         products = super(ProductProduct, self.with_context(create_product_product=True)).create(vals_list)
         for prod in products:
+            _logger.info("Debugging")
             variant_sku = prod.product_tmpl_id.variant_sku
             _logger.info("Variant SKU: " + variant_sku)
             if prod.has_configurable_attributes:
