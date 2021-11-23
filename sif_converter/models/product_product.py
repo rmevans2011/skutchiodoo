@@ -23,6 +23,7 @@ class ProductProduct(models.Model):
                     variant_sku_parts.insert(0, "-" + prod.product_template_attribute_value_ids[i].product_attribute_value_id.name.split(' ')[0])
                 end_sku = "".join(variant_sku_parts)
                 _logger.info("Variant SKU: " + variant_sku+end_sku)
+                prod.default_code = variant_sku+end_sku
         # `_get_variant_id_for_combination` depends on existing variants
         self.clear_caches()
         return products
