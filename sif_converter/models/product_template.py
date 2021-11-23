@@ -110,6 +110,7 @@ class ProductTemplate(models.Model):
     def create(self, vals_list):
         ''' Store the initial standard price in order to be able to retrieve the cost of a product template for a given date'''
         for vals in vals_list:
+            _logger.info(vals)
             self._sanitize_vals(vals)
         templates = super(ProductTemplate, self).create(vals_list)
         if "create_product_product" not in self._context:
