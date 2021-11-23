@@ -16,6 +16,7 @@ class ProductProduct(models.Model):
         products = super(ProductProduct, self.with_context(create_product_product=True)).create(vals_list)
         for prod in products:
             variant_sku = prod.product_tmpl_id.variant_sku
+            _logger.info("Variant SKU: " + variant_sku)
             if prod.has_configurable_attributes:
                 variant_description = ""
                 variant_sku_parts = []
