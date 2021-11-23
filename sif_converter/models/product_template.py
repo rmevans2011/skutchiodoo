@@ -11,6 +11,11 @@ _logger = logging.getLogger(__name__)
 class product_template(models.Model):
     _inherit = "product.template"
 
+    variant_sku = fields.Char(string="Variant Sku", compute='_compute_variant_sku')
+
+    def _compute_variant_sku(self):
+        self.variant_sku = self.default_code
+
     def _create_variant_ids(self):
         self.flush()
         Product = self.env["product.product"]
