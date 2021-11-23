@@ -20,7 +20,7 @@ class ProductProduct(models.Model):
                 variant_description = ""
                 variant_sku_parts = []
                 for i in range(len(prod.attribute_line_ids)):
-                    variant_sku_parts.append(0, "-" + prod.product_template_attribute_value_ids[i].product_attribute_value_id.name.split(' ')[0])
+                    variant_sku_parts.insert(0, "-" + prod.product_template_attribute_value_ids[i].product_attribute_value_id.name.split(' ')[0])
                 _logger.info("Variant SKU: " + variant_sku.join(variant_sku_parts))
         # `_get_variant_id_for_combination` depends on existing variants
         self.clear_caches()
