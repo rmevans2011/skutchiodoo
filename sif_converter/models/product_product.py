@@ -18,6 +18,8 @@ class ProductProduct(models.Model):
             _logger.info("Logging Product")
             _logger.info(prod)
             _logger.info(prod.attribute_line_ids)
+            if prod.has_configurable_attributes:
+                _logger.info("Configured product")
         # `_get_variant_id_for_combination` depends on existing variants
         self.clear_caches()
         return products
