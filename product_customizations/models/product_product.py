@@ -6,7 +6,7 @@ _logger = logging.getLogger(__name__)
 class ProductProduct(models.Model):
     _inherit = "product.product"
 
-    variant_description = fields.Text(string="Variant Description")
+    variant_description = fields.Text(string="Variant Desc")
 
     @api.model_create_multi
     def create(self, vals_list):

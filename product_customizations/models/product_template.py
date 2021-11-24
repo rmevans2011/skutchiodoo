@@ -11,7 +11,7 @@ _logger = logging.getLogger(__name__)
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
-    variant_sku = fields.Char(string="Variant Sku")
+    variant_sku = fields.Char(string="Variant SKU")
 
     def _compute_variant_sku(self):
         self.variant_sku = self.default_code
