@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="view_import_job_kanban" model="ir.ui.view">
+        <field name="name">sif_converter.import_job.kanban</field>
+        <field name="model">sif_converter.import_job</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="id" />
+                <field name="customer_name" />
+                <field name="short_description" />
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_global_click">
+                            <div class="oe_kanban_details">
+                                <ul>
+                                    <li>
+                                        Customer Name: <field name="customer_name" />
+                                    </li>
+                                    <li>
+                                        Short Description: <field name="short_description" />
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    
+    <record id="view_import_job_tree" model="ir.ui.view">
+        <field name="name">sif_converter.import_job.tree</field>
+        <field name="model">sif_converter.import_job</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="id" />
+                <field name="customer_name" />
+                <field name="short_description" />
+                <field name="state" />
+            </tree>
+        </field>
+    </record>
+    
+    <record id="view_import_job_form" model="ir.ui.view">
+        <field name="name">sif_converter.import_job.form</field>
+        <field name="model">sif_converter.import_job</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_reset" id="button_reset" string="Reset to new import" class="btn-primary"
+                            states="needs_matching,estimate_ready,done,cancel"
+                            type="object"/>
+                    <button name="action_confirm" id="button_confirm" string="Confirm" class="btn-primary"
+                            states="new_import,estimate_ready,done,cancel"
+                            type="object"/>
+                    <button name="action_estimate" id="button_estimate" string="Create Estimate" class="btn-primary"
+                            states="new_import,needs_matching,done,cancel"
+                            type="object"/>
+                    <button name="action_cancel" id="button_cancel" string="Cancel Import"
+                            states="new_import,needs_matching,estimate_ready"
+                            type="object" />
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="new_estimate,needs_matching,estimate_ready,done"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="customer_id" />
+                        <field name="customer_name" />
+                        <field name="short_description" />
+                        <field name="csv_file" />
+                    </group> 
+                    <!-- Split Main Group Into Two Groups -->
+                    <!--
+                        <group>
+                            <group>
+                            </group>
+                            <group>
+                            </group>
+                        </group>
+                    -->
+                    <notebook>
+                        <page string="Imported Items" name="imported_items">
+                            <field name="import_item_ids">
+                                <tree>
+                                    <field name="sif_sku" />
+                                    <field name="sif_options" />
+                                    <field name="search_sku" />
+                                    <field name="qty" />
+                                    <field name="product_id" />
+                                    <field name="needs_matching" />
+                                </tree>
+                                <form>
+                                    <group>
+                                        <field name="sif_sku" />
+                                        <field name="sif_options" />
+                                        <field name="product_id" />
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+<!--                        <page string="Items To Match" name="items_to_match">-->
+<!--                            <field name="nm_import_item_ids" >-->
+<!--                                <tree>-->
+<!--                                    <field name="sif_sku" />-->
+<!--                                    <field name="sif_options" />-->
+<!--                                    <field name="needs_matching" />-->
+<!--                                </tree>-->
+<!--                                <form>-->
+<!--                                    <group>-->
+<!--                                        <field name="sif_sku" />-->
+<!--                                        <field name="sif_options" />-->
+<!--                                        <field name="product_id" />-->
+<!--                                    </group>-->
+<!--                                </form>-->
+<!--                            </field>-->
+<!--                        </page>-->
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" />
+                    <field name="activity_ids" />
+                    <field name="message_ids" />
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_import_job_search" model="ir.ui.view">
+        <field name="name">sif_converter.import_job.search</field>
+        <field name="model">sif_converter.import_job</field>
+        <field name="arch" type="xml">
+            <search string="Import Jobs">
+                <field name="customer_name" />
+                <field name="short_description" />
+                <separator />
+                <filter name="filter_create_date" date="create_date" />
+                <group expand="1" string="Group By">
+                    <filter string="Customer Name" name="customer_name" context="{'group_by': 'customer_name'}" />
+                </group>
+            </search>
+        </field>
+    </record>
+    
+    <record id="sif_converter_import_job" model="ir.actions.act_window">
+            <field name="name">Import Jobs</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sif_converter.import_job</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <!--<field name="search_view_id" ref="sale_order_view_search_inherit_sale"/>
+            <field name="context">{}</field>
+            <field name="domain">[('state', 'not in', ('draft', 'sent', 'cancel'))]</field>-->
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new import job, the first step of a new sale!
+                </p>
+            </field>
+    </record>
+
+    <record id="sif_converter_import_item" model="ir.actions.act_window">
+            <field name="name">Import Items</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">import_job.import_item.lines</field>
+            <field name="view_mode">tree</field>
+            <!--<field name="search_view_id" ref="sale_order_view_search_inherit_sale"/>
+            <field name="context">{}</field>
+            <field name="domain">[('state', 'not in', ('draft', 'sent', 'cancel'))]</field>-->
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new import job, the first step of a new sale!
+                </p>
+            </field>
+    </record>
+
+    <record id="sif_converter_import_job" model="ir.actions.act_window">
+            <field name="name">Import Jobs</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sif_converter.import_job</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <!--<field name="search_view_id" ref="sale_order_view_search_inherit_sale"/>
+            <field name="context">{}</field>
+            <field name="domain">[('state', 'not in', ('draft', 'sent', 'cancel'))]</field>-->
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new import job, the first step of a new sale!
+                </p>
+            </field>
+    </record>
+    
+    <menuitem id="sif_converter_root"
+              name="Sif Converter"
+              sequence="10" />
+    
+    <menuitem id="sif_converter_imports_root"
+              name="Imports"
+              parent="sif_converter_root"
+              sequence="10" />
+    
+    <menuitem id="sif_converter_imports_import_job"
+              name="Import Jobs"
+              parent="sif_converter_imports_root"
+              action="sif_converter_import_job"
+              sequence="11" />
+
+    <menuitem id="sif_converter_imports_import_item"
+              name="Imported Items"
+              parent="sif_converter_imports_root"
+              action="sif_converter_import_item"
+              sequence="12" />
+</odoo>
