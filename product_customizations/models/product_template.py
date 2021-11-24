@@ -110,7 +110,7 @@ class ProductTemplate(models.Model):
     def create(self, vals_list):
         ''' Store the initial standard price in order to be able to retrieve the cost of a product template for a given date'''
         for vals in vals_list:
-            if vals['default_code']:
+            if 'default_code' in vals:
                 vals['variant_sku'] = vals['default_code']
             self._sanitize_vals(vals)
         templates = super(ProductTemplate, self).create(vals_list)
