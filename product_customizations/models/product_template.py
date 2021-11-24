@@ -11,7 +11,7 @@ _logger = logging.getLogger(__name__)
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
-    variant_sku = fields.Char(string="Variant Sku")
+    variant_sku = fields.Char(string="Variant SKU")
 
     def _compute_variant_sku(self):
         self.variant_sku = self.default_code
@@ -110,7 +110,8 @@ class ProductTemplate(models.Model):
     def create(self, vals_list):
         ''' Store the initial standard price in order to be able to retrieve the cost of a product template for a given date'''
         for vals in vals_list:
-            vals['variant_sku'] = vals['default_code']
+            if 'default_code' in vals:
+                vals['variant_sku'] = vals['default_code']
             self._sanitize_vals(vals)
         templates = super(ProductTemplate, self).create(vals_list)
         if "create_product_product" not in self._context:
@@ -123,7 +124,6 @@ class ProductTemplate(models.Model):
                 related_vals['barcode'] = vals['barcode']
             if vals.get('default_code'):
                 related_vals['default_code'] = vals['default_code']
-                related_vals['variant_sku'] = vals['default_code']
             if vals.get('standard_price'):
                 related_vals['standard_price'] = vals['standard_price']
             if vals.get('volume'):
