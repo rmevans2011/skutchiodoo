@@ -15,6 +15,7 @@ class import_item(models.Model):
     qty = fields.Integer(string='Quantity')
     needs_matching = fields.Boolean(string='Needs to be matched')
     product_id = fields.Many2one('product.product', string='Matched Product')
+    product_tmp_id = fields.Many2one('product.template', string='Matched Product Template')
     matched_product_id = fields.Many2one('sif_converter.matched_product', string='Matched Product Internal')
 
     @api.model
