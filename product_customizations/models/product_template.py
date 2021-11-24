@@ -123,7 +123,6 @@ class ProductTemplate(models.Model):
                 related_vals['barcode'] = vals['barcode']
             if vals.get('default_code'):
                 related_vals['default_code'] = vals['default_code']
-                related_vals['variant_sku'] = vals['default_code']
             if vals.get('standard_price'):
                 related_vals['standard_price'] = vals['standard_price']
             if vals.get('volume'):
