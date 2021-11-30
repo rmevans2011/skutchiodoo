@@ -7,9 +7,13 @@
         <field name="inherit_id" ref="product.product_template_only_form_view" />
         <field name="arch" type="xml">
             <field name="invoice_policy" position="after">
-                <field name="box_length" />
-                <field name="box_width" />
-                <field name="box_height" />
+                <group>
+                    <div>
+                        <field name="box_length" class="oe_inline" string="L"/> X
+                        <field name="box_width" class="oe_inline" string="W"/> X
+                        <field name="box_height" class="oe_inline" string="H"/>
+                    </div>
+                </group>
             </field>
         </field>
     </record>
