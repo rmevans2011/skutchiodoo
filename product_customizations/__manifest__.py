@@ -26,7 +26,8 @@
 
     # always loaded
     'data': [
-        'views/product_attribute.xml'
+        'views/product_attribute.xml',
+        'views/product_template.xml'
     ],
     # only loaded in demonstration mode
     'demo': [],
