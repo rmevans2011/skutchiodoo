@@ -165,6 +165,19 @@ class ProductTemplate(models.Model):
             uom_po_id = self.env['uom.uom'].browse(vals.get('uom_po_id')) or self.uom_po_id
             if uom_id and uom_po_id and uom_id.category_id != uom_po_id.category_id:
                 vals['uom_po_id'] = uom_id.id
+        if ('product_length' in vals) or ('product_width' in vals) or ('product_height' in vals) \
+                or ('box_length' in vals) or ('box_width' in vals) or ('box_height' in vals)\
+                or ('product_weight' in vals) or ('base_description' in vals):
+            product_string = '\n\t- Product Dimensions: ' + vals['product_length'] or self.product_length + '"L x '\
+                             + vals['product_width'] or self.product_width+ '"W x '\
+                             + vals['product_height'] or self.product_height+ '"H'
+            box_string = '\n\t- Box Dimensions: ' + vals['box_length'] or self.box_length + '"L x '\
+                         + vals['box_width'] or self.box_width + '"W x '\
+                         + vals['box_height'] or self.box_height + '"H'
+            weight_string = '\n\t- Weight: ' + str(vals['product_weight']) or str(self.product_weight) + 'lbs.'
+            vals['description_sale'] = vals['base_description'].replace('-',
+                                                                    '\t-') or self.base_description\
+                                       + product_string + box_string + weight_string
         res = super(ProductTemplate, self).write(vals)
         if 'attribute_line_ids' in vals or (vals.get('active') and len(self.product_variant_ids) == 0):
             self._create_variant_ids()
