@@ -8,7 +8,7 @@
         <field name="arch" type="xml">
             <field name="invoice_policy" position="after">
                 <group>
-                    <div>
+                    <div class="o_row">
                         <field name="box_length" class="oe_inline" string="L"/> X
                         <field name="box_width" class="oe_inline" string="W"/> X
                         <field name="box_height" class="oe_inline" string="H"/>
