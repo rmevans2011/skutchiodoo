@@ -199,7 +199,7 @@ class ProductTemplate(models.Model):
             if 'base_description' in vals:
                 bd = vals['base_description'].replace('-', '\t-')
             else:
-                bd = self.base_description
+                bd = self.base_description.replace('-', '\t-')
             product_string = '\n\t- Product Dimensions: ' + pl + '"L x ' + pw + '"W x ' + ph + '"H'
             box_string = '\n\t- Box Dimensions: ' + bl + '"L x ' + bw + '"W x ' + bh + '"H'
             weight_string = '\n\t- Weight: ' + str(wght) + 'lbs.'
