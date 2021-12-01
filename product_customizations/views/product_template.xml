@@ -11,8 +11,8 @@
                     <group>
                         <group string="Box Dimensions (LxWxH)">
                             <div class="o_row">
-                                    L: <field name="box_length" class="oe_inline" placeholder="L"/> <strong>x</strong>&nbsp;
-                                    W: <field name="box_width" class="oe_inline" placeholder="W"/> <strong>x</strong>&nbsp;
+                                    L: <field name="box_length" class="oe_inline" placeholder="L"/> <strong>x</strong>
+                                    W: <field name="box_width" class="oe_inline" placeholder="W"/> <strong>x</strong>
                                     H: <field name="box_height" class="oe_inline" placeholder="H"/>
                             </div>
                             <div class="o_row">
