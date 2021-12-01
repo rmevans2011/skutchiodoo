@@ -6,11 +6,13 @@
         <field name="model">product.template</field>
         <field name="inherit_id" ref="product.product_template_only_form_view" />
         <field name="arch" type="xml">
-            <field name="barcode" position="after">
-                        L: <field name="box_length" class="oe_inline" placeholder="L"/> X
-                        W: <field name="box_width" class="oe_inline" placeholder="W"/> X
-                        H: <field name="box_height" class="oe_inline" placeholder="H"/>
-            </field>
+            <xpath expr="//page[@name='variants']" position="before">
+                <page name="product_description_details" string="Description Builder">
+                    <p class="oe_grey">
+                        Product details to build description
+                    </p>
+                </page>
+            </xpath>
         </field>
     </record>
 
