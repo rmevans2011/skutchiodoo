@@ -195,7 +195,7 @@ class ProductTemplate(models.Model):
             if 'product_weight' in vals:
                 wght = vals['product_weight']
             else:
-                wght = vals['weight']
+                wght = self.product_weight
             if 'base_description' in vals:
                 bd = vals['base_description'].replace('-', '\t-')
             else:
