@@ -9,9 +9,9 @@
             <field name="invoice_policy" position="after">
                 <group>
                     <div class="o_row">
-                        <field name="box_length" class="oe_inline" string="L"/> X
-                        <field name="box_width" class="oe_inline" string="W"/> X
-                        <field name="box_height" class="oe_inline" string="H"/>
+                        <field name="box_length" class="oe_inline" placeholder="L"/> X
+                        <field name="box_width" class="oe_inline" placeholder="W"/> X
+                        <field name="box_height" class="oe_inline" placeholder="H"/>
                     </div>
                 </group>
             </field>
