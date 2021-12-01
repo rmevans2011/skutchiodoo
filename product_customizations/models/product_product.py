@@ -7,7 +7,15 @@ class ProductProduct(models.Model):
     _inherit = "product.product"
 
     variant_description = fields.Text(string="Variant Desc")
-    computed_description = fields.Text(string="Base Product Description")
+    computed_description = fields.Text(string="Base Product Description", compute="_compute_computed_description")
+
+    def _compute_computed_description(self):
+        if self.variant_description != "":
+            self.computed_description = "\n"+self.product_tmpl_id.description_sale+\
+                                        "\nSelected Options:"+self.variant_description
+        else:
+            self.computed_description = "\n" + self.product_tmpl_id.description_sale
+
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -33,12 +41,15 @@ class ProductProduct(models.Model):
                     _logger.info("Variant SKU: " + variant_sku+end_sku)
                     prod.default_code = variant_sku+end_sku
                     prod.variant_description = variant_description
+                    """
                     prod.computed_description = "\n"+prod.product_tmpl_id.description_sale+\
                                                 "\nSelected Options:"+prod.variant_description
+                    
                 else:
                     prod.computed_description = "\n"+prod.product_tmpl_id.description_sale
             else:
                 prod.computed_description = "\n"+prod.product_tmpl_id.description_sale
+            """
         # `_get_variant_id_for_combination` depends on existing variants
         self.clear_caches()
         return products
