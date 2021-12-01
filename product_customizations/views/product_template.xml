@@ -9,20 +9,27 @@
             <xpath expr="//page[@name='variants']" position="before">
                 <page name="product_description_details" string="Description Builder">
                     <group>
-                        <group string="Box Dimensions (LxWxH)">
-                            <div class="o_row">
-                                    L: <field name="box_length" class="oe_inline" placeholder="L"/> <strong>x</strong>
-                                    W: <field name="box_width" class="oe_inline" placeholder="W"/> <strong>x</strong>
-                                    H: <field name="box_height" class="oe_inline" placeholder="H"/>
-                            </div>
-                            <div class="o_row">
-                                <field name="product_weight" />
-                            </div>
+                        <group>
+                            <field name="product_weight" />
                         </group>
                         <group>
-                            <p class="oe_grey">
-                                Product details
-                            </p>
+
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Box Dimensions (LxWxH)">
+                            <div class="o_row">
+                                    <field name="box_length" class="oe_inline" placeholder="L"/><strong>x</strong>
+                                    <field name="box_width" class="oe_inline" placeholder="W"/><strong>x</strong>
+                                    <field name="box_height" class="oe_inline" placeholder="H"/>
+                            </div>
+                        </group>
+                        <group string="Product Dimensions (LxWxH)">
+                            <div class="o_row">
+                                    <field name="product_length" class="oe_inline" placeholder="L"/><strong>x</strong>
+                                    <field name="product_width" class="oe_inline" placeholder="W"/><strong>x</strong>
+                                    <field name="product_height" class="oe_inline" placeholder="H"/>
+                            </div>
                         </group>
                     </group>
                     <p class="oe_grey">

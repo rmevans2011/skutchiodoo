@@ -19,6 +19,7 @@ class ProductTemplate(models.Model):
     product_width = fields.Char(string="Product Width")
     product_height = fields.Char(string="Product Height")
     product_weight = fields.Integer(string="Product Weight")
+    base_description = fields.Text(string="Base Desccription")
 
     def _compute_variant_sku(self):
         self.variant_sku = self.default_code
