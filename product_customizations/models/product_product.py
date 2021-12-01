@@ -42,3 +42,7 @@ class ProductProduct(models.Model):
         # `_get_variant_id_for_combination` depends on existing variants
         self.clear_caches()
         return products
+
+    @api.onchange('description_sale')
+    def _onchange_description_sale(self):
+        _logger.info("Sale Description Changed")
