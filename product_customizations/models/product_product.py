@@ -43,6 +43,6 @@ class ProductProduct(models.Model):
         self.clear_caches()
         return products
 
-    @api.onchange('description_sale')
+    @api.onchange('product_tmpl_id.description_sale')
     def _onchange_description_sale(self):
         _logger.info("Sale Description Changed")
