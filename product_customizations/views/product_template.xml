@@ -13,7 +13,7 @@
                             <field name="product_weight" />
                         </group>
                         <group>
-
+                            <field name="base_description" />
                         </group>
                     </group>
                     <group>
