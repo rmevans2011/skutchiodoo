@@ -228,3 +228,7 @@ class ProductTemplate(models.Model):
             # Actually touch all variants to avoid using filtered on the image_variant_1920 field
             self.product_variant_ids.write({})
         return res
+
+    @api.onchange('description_sale')
+    def _onchange_description_sale(self):
+        _logger.info("Product_Template Sale Description Changed")
