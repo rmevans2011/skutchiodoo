@@ -204,7 +204,10 @@ class ProductTemplate(models.Model):
             box_string = '\n\t- Box Dimensions: ' + bl + '"L x ' + bw + '"W x ' + bh + '"H'
             weight_string = '\n\t- Weight: ' + str(wght) + 'lbs.'
             vals['description_sale'] = bd + product_string + box_string + weight_string
-        res = super(ProductTemplate, self).write(vals)
+            res = super(ProductTemplate, self).write(vals)
+            self.product_variant_ids.write({})
+        else:
+            res = super(ProductTemplate, self).write(vals)
         if 'attribute_line_ids' in vals or (vals.get('active') and len(self.product_variant_ids) == 0):
             self._create_variant_ids()
         if 'active' in vals and not vals.get('active'):
