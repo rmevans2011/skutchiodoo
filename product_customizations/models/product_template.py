@@ -12,13 +12,13 @@ class ProductTemplate(models.Model):
     _inherit = "product.template"
 
     variant_sku = fields.Char(string="Variant SKU")
-    box_length = fields.Char(string="Box Length")
-    box_width = fields.Char(string="Box Width")
-    box_height = fields.Char(string="Box Height")
-    product_length = fields.Char(string="Product Length")
-    product_width = fields.Char(string="Product Width")
-    product_height = fields.Char(string="Product Height")
-    product_weight = fields.Integer(string="Product Weight")
+    box_length = fields.Char(string="Box Length", required=True)
+    box_width = fields.Char(string="Box Width", required=True)
+    box_height = fields.Char(string="Box Height", required=True)
+    product_length = fields.Char(string="Product Length", required=True)
+    product_width = fields.Char(string="Product Width", required=True)
+    product_height = fields.Char(string="Product Height", required=True)
+    product_weight = fields.Integer(string="Product Weight", required=True)
     base_description = fields.Text(string="Base Desccription", required=True)
 
     def _compute_variant_sku(self):
@@ -155,3 +155,33 @@ class ProductTemplate(models.Model):
                 template.write(related_vals)
 
         return templates
+
+    def write(self, vals):
+        self._sanitize_vals(vals)
+        _logger.info(vals)
+        if 'uom_id' in vals or 'uom_po_id' in vals:
+            uom_id = self.env['uom.uom'].browse(vals.get('uom_id')) or self.uom_id
+            uom_po_id = self.env['uom.uom'].browse(vals.get('uom_po_id')) or self.uom_po_id
+            if uom_id and uom_po_id and uom_id.category_id != uom_po_id.category_id:
+                vals['uom_po_id'] = uom_id.id
+        res = super(ProductTemplate, self).write(vals)
+        if 'attribute_line_ids' in vals or (vals.get('active') and len(self.product_variant_ids) == 0):
+            self._create_variant_ids()
+        if 'active' in vals and not vals.get('active'):
+            self.with_context(active_test=False).mapped('product_variant_ids').write({'active': vals.get('active')})
+        if 'image_1920' in vals:
+            self.env['product.product'].invalidate_cache(fnames=[
+                'image_1920',
+                'image_1024',
+                'image_512',
+                'image_256',
+                'image_128',
+                'can_image_1024_be_zoomed',
+            ])
+            # Touch all products that will fall back on the template field
+            # This is done because __last_update is used to compute the 'unique' SHA in image URLs
+            # for making sure that images are not retrieved from the browser cache after a change
+            # Performance discussion outcome:
+            # Actually touch all variants to avoid using filtered on the image_variant_1920 field
+            self.product_variant_ids.write({})
+        return res
