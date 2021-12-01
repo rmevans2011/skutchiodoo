@@ -12,12 +12,12 @@ class ProductTemplate(models.Model):
     _inherit = "product.template"
 
     variant_sku = fields.Char(string="Variant SKU")
-    box_length = fields.Integer(string="Box Length")
-    box_width = fields.Integer(string="Box Width")
-    box_height = fields.Integer(string="Box Height")
-    product_length = fields.Integer(string="Product Length")
-    product_width = fields.Integer(string="Product Width")
-    product_height = fields.Integer(string="Product Height")
+    box_length = fields.Char(string="Box Length")
+    box_width = fields.Char(string="Box Width")
+    box_height = fields.Char(string="Box Height")
+    product_length = fields.Char(string="Product Length")
+    product_width = fields.Char(string="Product Width")
+    product_height = fields.Char(string="Product Height")
     product_weight = fields.Integer(string="Product Weight")
 
     def _compute_variant_sku(self):
