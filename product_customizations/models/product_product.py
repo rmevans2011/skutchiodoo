@@ -37,7 +37,7 @@ class ProductProduct(models.Model):
                         variant_description += prod.attribute_line_ids[i].attribute_id.product_display_name + ": " + prod.product_template_attribute_value_ids[
                             i].product_attribute_value_id.name
                         variant_sku_parts.insert(0, "-" + prod.product_template_attribute_value_ids[i].product_attribute_value_id.sku)
-                        end_sku += "- " + prod.product_template_attribute_value_ids[i].product_attribute_value_id.sku
+                        end_sku += "-" + prod.product_template_attribute_value_ids[i].product_attribute_value_id.sku
                     _logger.info("Variant SKU: " + variant_sku+end_sku)
                     prod.default_code = variant_sku+end_sku
                     prod.variant_description = variant_description
