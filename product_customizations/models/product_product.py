@@ -25,15 +25,16 @@ class ProductProduct(models.Model):
                     variant_sku_parts = []
                     end_sku = ""
                     for i in range(len(prod.attribute_line_ids)):
-                        variant_description += "\n\t-"
+                        variant_description += "\n\t- "
                         variant_description += prod.attribute_line_ids[i].attribute_id.product_display_name + ": " + prod.product_template_attribute_value_ids[
                             i].product_attribute_value_id.name
                         variant_sku_parts.insert(0, "-" + prod.product_template_attribute_value_ids[i].product_attribute_value_id.sku)
-                        end_sku += "-" + prod.product_template_attribute_value_ids[i].product_attribute_value_id.sku
+                        end_sku += "- " + prod.product_template_attribute_value_ids[i].product_attribute_value_id.sku
                     _logger.info("Variant SKU: " + variant_sku+end_sku)
                     prod.default_code = variant_sku+end_sku
                     prod.variant_description = variant_description
-                    prod.computed_description = "\n"+prod.product_tmpl_id.description_sale+prod.variant_description
+                    prod.computed_description = "\n"+prod.product_tmpl_id.description_sale+\
+                                                "\nSelected Options:"+prod.variant_description
                 else:
                     prod.computed_description = "\n"+prod.product_tmpl_id.description_sale
             else:

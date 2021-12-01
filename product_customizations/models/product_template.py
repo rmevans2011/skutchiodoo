@@ -124,11 +124,11 @@ class ProductTemplate(models.Model):
             if 'default_code' in vals:
                 vals['variant_sku'] = vals['default_code']
             if ('product_length' in vals) & ('product_width' in vals) & ('product_height' in vals):
-                product_string = '\n\t-Product Dimensions: '+vals['product_length']+'"L x '+vals['product_width']+'"W x '+vals['product_height']+'"H'
+                product_string = '\n\t- Product Dimensions: '+vals['product_length']+'"L x '+vals['product_width']+'"W x '+vals['product_height']+'"H'
             if ('box_length' in vals) & ('box_width' in vals) & ('box_height' in vals):
-                box_string = '\n\t-Box Dimensions: '+vals['box_length']+'"L x '+vals['box_width']+'"W x '+vals['box_height']+'"H'
+                box_string = '\n\t- Box Dimensions: '+vals['box_length']+'"L x '+vals['box_width']+'"W x '+vals['box_height']+'"H'
             if 'product_weight' in vals:
-                weight_string = '\n\t-Weight: '+str(vals['product_weight'])+'lbs.'
+                weight_string = '\n\t- Weight: '+str(vals['product_weight'])+'lbs.'
             vals['description_sale'] = vals['base_description'].replace('-','\t-')+product_string+box_string+weight_string
             self._sanitize_vals(vals)
         templates = super(ProductTemplate, self).create(vals_list)
