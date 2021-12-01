@@ -168,18 +168,42 @@ class ProductTemplate(models.Model):
         if ('product_length' in vals) or ('product_width' in vals) or ('product_height' in vals) \
                 or ('box_length' in vals) or ('box_width' in vals) or ('box_height' in vals)\
                 or ('product_weight' in vals) or ('base_description' in vals):
-            product_string = '\n\t- Product Dimensions: ' \
-                             + vals['product_length'] if 'product_length' in vals else self.product_length + '"L x '\
-                             + vals['product_width'] if 'product_width' in vals else self.product_width+ '"W x '\
-                             + vals['product_height'] if 'product_height' in vals else self.product_height+ '"H'
-            box_string = '\n\t- Box Dimensions: ' \
-                         + vals['box_length'] if 'box_length' in vals else self.box_length + '"L x '\
-                         + vals['box_width'] if 'box_width' in vals else self.box_width + '"W x '\
-                         + vals['box_height'] if 'box_height' in vals else self.box_height + '"H'
-            weight_string = '\n\t- Weight: ' \
-                            + str(vals['product_weight']) if 'product_weight' in vals else str(self.product_weight) + 'lbs.'
-            vals['description_sale'] = vals['base_description'].replace('-', '\t-') if 'base_description' in vals \
-                else self.base_description + product_string + box_string + weight_string
+            if 'product_length' in vals:
+                pl = vals['product_length']
+            else:
+                pl = self.product_length
+            if 'product_width' in vals:
+                pw = vals['product_width']
+            else:
+                pw = self.product_width
+            if 'product_height' in vals:
+                ph = vals['product_height']
+            else:
+                ph = self.product_height
+            if 'box_length' in vals:
+                bl = vals['box_length']
+            else:
+                bl = self.box_length
+            if 'box_width' in vals:
+                bw = vals['box_width']
+            else:
+                bw = self.box_width
+            if 'box_height' in vals:
+                bh = vals['box_height']
+            else:
+                bh = self.box_height
+            if 'product_weight' in vals:
+                wght = vals['product_weight']
+            else:
+                wght = vals['weight']
+            if 'base_description' in vals:
+                bd = vals['base_description'].replace('-', '\t-')
+            else:
+                bd = self.base_description
+            product_string = '\n\t- Product Dimensions: ' + pl + '"L x ' + pw + '"W x ' + ph + '"H'
+            box_string = '\n\t- Box Dimensions: ' + bl + '"L x ' + bw + '"W x ' + bh + '"H'
+            weight_string = '\n\t- Weight: ' + str(wght) + 'lbs.'
+            vals['description_sale'] = bd + product_string + box_string + weight_string
         res = super(ProductTemplate, self).write(vals)
         if 'attribute_line_ids' in vals or (vals.get('active') and len(self.product_variant_ids) == 0):
             self._create_variant_ids()
