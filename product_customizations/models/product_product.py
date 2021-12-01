@@ -33,8 +33,8 @@ class ProductProduct(models.Model):
                     prod.default_code = variant_sku+end_sku
                     prod.variant_description = variant_description
                     prod.computed_description = prod.description_sale+prod.variant_description
-                else:
-                    prod.computed_description = prod.description_sale
+            else:
+                prod.computed_description = prod.description_sale
         # `_get_variant_id_for_combination` depends on existing variants
         self.clear_caches()
         return products
