@@ -19,7 +19,7 @@ class ProductTemplate(models.Model):
     product_width = fields.Char(string="Product Width")
     product_height = fields.Char(string="Product Height")
     product_weight = fields.Integer(string="Product Weight")
-    base_description = fields.Text(string="Base Desccription")
+    base_description = fields.Text(string="Base Desccription", required=True)
 
     def _compute_variant_sku(self):
         self.variant_sku = self.default_code
@@ -118,8 +118,18 @@ class ProductTemplate(models.Model):
     def create(self, vals_list):
         ''' Store the initial standard price in order to be able to retrieve the cost of a product template for a given date'''
         for vals in vals_list:
+            box_string = ''
+            weight_string = ''
+            product_string = ''
             if 'default_code' in vals:
                 vals['variant_sku'] = vals['default_code']
+            if ('product_length' in vals) & ('product_width' in vals) & ('product_height' in vals):
+                product_string = '\nProduct Dimensions:'+vals['product_length']+'"L x '+vals['product_width']+'"W x '+vals['product_height']+'"H'
+            if ('box_length' in vals) & ('box_width' in vals) & ('box_height' in vals):
+                box_string = '\nBox Dimensions:'+vals['box_length']+'"L x '+vals['box_width']+'"W x '+vals['box_height']+'"H'
+            if 'product_weight' in vals:
+                weight_string = '\nWeight: '+vals['product_weight']+'lbs.'
+            vals['description_sale'] = vals['base_description']+product_string+box_string+weight_string
             self._sanitize_vals(vals)
         templates = super(ProductTemplate, self).create(vals_list)
         if "create_product_product" not in self._context:
