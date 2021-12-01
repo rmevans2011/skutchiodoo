@@ -19,7 +19,7 @@
         <field name="inherit_id" ref="product.attribute_tree_view" />
         <field name="arch" type="xml">
             <field name="name" position="after">
-                <field name="friendly_name" />
+                <field name="att_sku" />
                 <field name="custom_order" />
             </field>
         </field>
