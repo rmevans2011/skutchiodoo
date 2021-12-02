@@ -24,6 +24,7 @@ class ProductProduct(models.Model):
 
     def _compute_computed_description(self):
         for record in self:
+            _logger.info("Processing Record: " + record.id)
             if record.variant_description != "":
                 record.computed_description = "\n"+record.product_tmpl_id.description_sale+\
                                             "\nSelected Options:"+record.variant_description
