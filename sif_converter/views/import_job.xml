@@ -35,8 +35,7 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="id" />
-                <field name="customer_name" />
-                <field name="short_description" />
+                <field name="customer_id" />
                 <field name="state" />
             </tree>
         </field>
