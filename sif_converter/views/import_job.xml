@@ -134,7 +134,7 @@
                 <separator />
                 <filter name="filter_create_date" date="create_date" />
                 <group expand="1" string="Group By">
-                    <filter string="Customer Name" name="customer_name" context="{'group_by': 'customer_name'}" />
+                    <filter string="Customer" name="customer_id" context="{'group_by': 'customer_id'}" />
                 </group>
             </search>
         </field>
