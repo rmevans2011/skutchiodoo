@@ -10,16 +10,17 @@ class ProductProduct(models.Model):
     computed_description = fields.Text(string="Base Product Description", compute="_compute_computed_description")
 
     def _compute_variant_description(self):
-        if self.has_configurable_attributes:
-            variant_description = ""
-            for i in range(len(self.attribute_line_ids)):
-                variant_description += "\n\t- "
-                variant_description += self.attribute_line_ids[i].attribute_id.product_display_name + ": " \
-                                       + self.product_template_attribute_value_ids[i].product_attribute_value_id.name \
-                                       + " (" + self.product_template_attribute_value_ids[i].product_attribute_value_id.sku + ")"
-            self.variant_description = variant_description
-        else:
-            self.variant_description = ""
+        for record in self:
+            if record.has_configurable_attributes:
+                variant_description = ""
+                for i in range(len(record.attribute_line_ids)):
+                    variant_description += "\n\t- "
+                    variant_description += record.attribute_line_ids[i].attribute_id.product_display_name + ": " \
+                                           + record.product_template_attribute_value_ids[i].product_attribute_value_id.name \
+                                           + " (" + record.product_template_attribute_value_ids[i].product_attribute_value_id.sku + ")"
+                self.variant_description = variant_description
+            else:
+                self.variant_description = ""
 
     def _compute_computed_description(self):
         for record in self:
