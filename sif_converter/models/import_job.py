@@ -108,6 +108,7 @@ class import_job(models.Model):
                 'search_sku': search_sku,
                 'qty': qty,
                 'sif_options': sif_opts,
+                'generic_code': 'need_to_remove',
                 'needs_matching': False
             }
 
