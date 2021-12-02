@@ -130,8 +130,7 @@
         <field name="model">sif_converter.import_job</field>
         <field name="arch" type="xml">
             <search string="Import Jobs">
-                <field name="customer_name" />
-                <field name="short_description" />
+                <field name="customer_id" />
                 <separator />
                 <filter name="filter_create_date" date="create_date" />
                 <group expand="1" string="Group By">
