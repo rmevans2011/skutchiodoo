@@ -18,7 +18,7 @@ class ProductProduct(models.Model):
                     variant_description += record.attribute_line_ids[i].attribute_id.product_display_name + ": " \
                                            + record.product_template_attribute_value_ids[i].product_attribute_value_id.name \
                                            + " (" + record.product_template_attribute_value_ids[i].product_attribute_value_id.sku + ")"
-            if record.variant_description != "":
+            if variant_description != "":
                 record.computed_description = "\n"+record.product_tmpl_id.description_sale+\
                                             "\nSelected Options:"+variant_description
             else:
