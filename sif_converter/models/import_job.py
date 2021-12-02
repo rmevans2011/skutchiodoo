@@ -2,7 +2,7 @@
 from odoo import api, fields, models
 import logging
 import base64
-import csv
+import xml.etree.ElementTree as ET
 import io
 _logger = logging.getLogger(__name__)
 
@@ -59,6 +59,41 @@ class import_job(models.Model):
     def create(self, vals):
         new_status = "estimate_ready"
         res = super(import_job, self).create(vals)
+
+        Product = self.env['product.product']
+        Matched_Product = self.env['sif_converter.matched_product']
+
+        #Load XML File
+        decoded_file = base64.b64decode(vals['sif_file'])
+        tree = ET.fromstring(decoded_file)
+        ns = {'ofda': 'http://www.ofdaxml.org/schema'}
+
+        #Load Line Items
+        lineItems = tree.findall('./ofda:PurchaseOrder/ofda:OrderLineItem', ns)
+
+        for lineItem in lineItems:
+            next_code = False
+            add_sku = []
+            enterprise_code = lineItem.find('ofda:VendorRef', ns).text
+            catalog_code = lineItem.find('ofda:SpecItem/ofda:Catalog/ofda:Code', ns).text
+            options = lineItem.findall('ofda:SpecItem/ofda:Option', ns)
+            base_sku = lineItem.find('ofda:SpecItem/ofda:Number', ns).text
+            #Build Product Line specific sku
+            if (enterprise_code == 'SKU'):
+                if (catalog_code == 'ECS'):
+                    for option in options:
+                        code = option.find('ofda:Code', ns).text
+                        if (next_code):
+                            next_code = False
+                            add_sku.insert(0, '-' + code)
+                        else:
+                            if (code == 'FAB'):
+                                next_code = True
+                            if (code == 'PET'):
+                                next_code = True
+                            if (code == 'WB'):
+                                add_sku.insert(0, '-WB')
+                    _logger.info(base_sku + "".join(add_sku))
 
         import_job_id = res.id
 
