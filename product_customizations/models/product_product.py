@@ -7,6 +7,15 @@ class ProductProduct(models.Model):
     _inherit = "product.product"
 
     variant_description = fields.Text(string="Variant Desc")
+    computed_description = fields.Text(string="Base Product Description", compute="_compute_computed_description")
+
+    def _compute_computed_description(self):
+        if self.variant_description != "":
+            self.computed_description = "\n"+self.product_tmpl_id.description_sale+\
+                                        "\nSelected Options:"+self.variant_description
+        else:
+            self.computed_description = "\n" + self.product_tmpl_id.description_sale
+
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -22,15 +31,30 @@ class ProductProduct(models.Model):
                 if prod.has_configurable_attributes:
                     variant_description = ""
                     variant_sku_parts = []
+                    end_sku = ""
                     for i in range(len(prod.attribute_line_ids)):
-                        variant_description += "\n"
-                        variant_description += prod.attribute_line_ids[i].attribute_id.name + ": " + prod.product_template_attribute_value_ids[
-                            i].product_attribute_value_id.name
-                        variant_sku_parts.insert(0, "-" + prod.product_template_attribute_value_ids[i].product_attribute_value_id.name.split(' ')[0])
-                    end_sku = "".join(variant_sku_parts)
+                        variant_description += "\n\t- "
+                        variant_description += prod.attribute_line_ids[i].attribute_id.product_display_name + ": "\
+                                               + prod.product_template_attribute_value_ids[i].product_attribute_value_id.name \
+                                               + " (" + prod.product_template_attribute_value_ids[i].product_attribute_value_id.name + ")"
+                        variant_sku_parts.insert(0, "-" + prod.product_template_attribute_value_ids[i].product_attribute_value_id.sku)
+                        end_sku += "-" + prod.product_template_attribute_value_ids[i].product_attribute_value_id.sku
                     _logger.info("Variant SKU: " + variant_sku+end_sku)
                     prod.default_code = variant_sku+end_sku
                     prod.variant_description = variant_description
+                    """
+                    prod.computed_description = "\n"+prod.product_tmpl_id.description_sale+\
+                                                "\nSelected Options:"+prod.variant_description
+                    
+                else:
+                    prod.computed_description = "\n"+prod.product_tmpl_id.description_sale
+            else:
+                prod.computed_description = "\n"+prod.product_tmpl_id.description_sale
+            """
         # `_get_variant_id_for_combination` depends on existing variants
         self.clear_caches()
         return products
+
+    @api.onchange('product_tmpl_id.description_sale')
+    def _onchange_description_sale(self):
+        _logger.info("Sale Description Changed")
