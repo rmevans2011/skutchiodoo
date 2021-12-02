@@ -6,11 +6,11 @@ _logger = logging.getLogger(__name__)
 class ProductProduct(models.Model):
     _inherit = "product.product"
 
-    variant_description = fields.Text(string="Variant Desc", compute="_compute_variant_description")
     computed_description = fields.Text(string="Base Product Description", compute="_compute_computed_description")
 
-    def _compute_variant_description(self):
+    def _compute_computed_description(self):
         for record in self:
+            _logger.info("Processing Record: " + str(record.id))
             if record.has_configurable_attributes:
                 variant_description = ""
                 for i in range(len(record.attribute_line_ids)):
@@ -18,15 +18,9 @@ class ProductProduct(models.Model):
                     variant_description += record.attribute_line_ids[i].attribute_id.product_display_name + ": " \
                                            + record.product_template_attribute_value_ids[i].product_attribute_value_id.name \
                                            + " (" + record.product_template_attribute_value_ids[i].product_attribute_value_id.sku + ")"
-                self.variant_description = variant_description
-            else:
-                self.variant_description = ""
-
-    def _compute_computed_description(self):
-        for record in self:
-            if record.variant_description != "":
+            if variant_description != "":
                 record.computed_description = "\n"+record.product_tmpl_id.description_sale+\
-                                            "\nSelected Options:"+record.variant_description
+                                            "\nSelected Options:"+variant_description
             else:
                 record.computed_description = "\n" + record.product_tmpl_id.description_sale
 
@@ -43,28 +37,13 @@ class ProductProduct(models.Model):
                 variant_sku = prod.product_tmpl_id.variant_sku
                 _logger.info("Variant SKU: " + variant_sku)
                 if prod.has_configurable_attributes:
-                    #variant_description = ""
                     variant_sku_parts = []
                     end_sku = ""
                     for i in range(len(prod.attribute_line_ids)):
-                        #variant_description += "\n\t- "
-                        #variant_description += prod.attribute_line_ids[i].attribute_id.product_display_name + ": "\
-                        #                       + prod.product_template_attribute_value_ids[i].product_attribute_value_id.name \
-                        #                       + " (" + prod.product_template_attribute_value_ids[i].product_attribute_value_id.name + ")"
                         variant_sku_parts.insert(0, "-" + prod.product_template_attribute_value_ids[i].product_attribute_value_id.sku)
                         end_sku += "-" + prod.product_template_attribute_value_ids[i].product_attribute_value_id.sku
                     _logger.info("Variant SKU: " + variant_sku+end_sku)
                     prod.default_code = variant_sku+end_sku
-                    #prod.variant_description = variant_description
-                    """
-                    prod.computed_description = "\n"+prod.product_tmpl_id.description_sale+\
-                                                "\nSelected Options:"+prod.variant_description
-                    
-                else:
-                    prod.computed_description = "\n"+prod.product_tmpl_id.description_sale
-            else:
-                prod.computed_description = "\n"+prod.product_tmpl_id.description_sale
-            """
         # `_get_variant_id_for_combination` depends on existing variants
         self.clear_caches()
         return products
