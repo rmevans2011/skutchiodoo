@@ -12,14 +12,14 @@ class ProductTemplate(models.Model):
     _inherit = "product.template"
 
     variant_sku = fields.Char(string="Variant SKU")
-    box_length = fields.Char(string="Box Length", required=True)
-    box_width = fields.Char(string="Box Width", required=True)
-    box_height = fields.Char(string="Box Height", required=True)
-    product_length = fields.Char(string="Product Length", required=True)
-    product_width = fields.Char(string="Product Width", required=True)
-    product_height = fields.Char(string="Product Height", required=True)
-    product_weight = fields.Integer(string="Product Weight", required=True)
-    base_description = fields.Text(string="Base Desccription", required=True)
+    box_length = fields.Char(string="Box Length", required=True, default="0")
+    box_width = fields.Char(string="Box Width", required=True, default="0")
+    box_height = fields.Char(string="Box Height", required=True, default="0")
+    product_length = fields.Char(string="Product Length", required=True, default="0")
+    product_width = fields.Char(string="Product Width", required=True, default="0")
+    product_height = fields.Char(string="Product Height", required=True, default="0")
+    product_weight = fields.Integer(string="Product Weight", required=True, default=0)
+    base_description = fields.Text(string="Base Desccription", required=True, default="0")
 
     def _compute_variant_sku(self):
         self.variant_sku = self.default_code
