@@ -31,7 +31,7 @@ class import_job(models.Model):
                                                                                 ('needs_matching', '=', True)])
         self.nm_import_item_ids = needs_matching_items
 
-    def action_confirm(self):
+    def action_create_estimate(self):
         order_vals = {
             'partner_id': self.customer_id.id
         }
@@ -44,7 +44,7 @@ class import_job(models.Model):
                 'product_id': line_item.product_id.id
             }
             self.env['sale.order.line'].create(item_vals)
-        self.state = 'needs_matching'
+        self.state = 'done'
 
     def action_estimate(self):
         self.state = 'estimate_ready'
