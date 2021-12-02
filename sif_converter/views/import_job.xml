@@ -68,7 +68,7 @@
                         <field name="customer_id" />
                         <field name="customer_name" />
                         <field name="short_description" />
-                        <field name="csv_file" />
+                        <field name="sif_file" />
                     </group> 
                     <!-- Split Main Group Into Two Groups -->
                     <!--
