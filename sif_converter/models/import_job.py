@@ -59,6 +59,7 @@ class import_job(models.Model):
     def create(self, vals):
         new_status = "estimate_ready"
         res = super(import_job, self).create(vals)
+        import_job_id = res.id
 
         Product = self.env['product.product']
         Matched_Product = self.env['sif_converter.matched_product']
@@ -74,10 +75,12 @@ class import_job(models.Model):
         for lineItem in lineItems:
             next_code = False
             add_sku = []
+            sif_options = []
             enterprise_code = lineItem.find('ofda:VendorRef', ns).text
             catalog_code = lineItem.find('ofda:SpecItem/ofda:Catalog/ofda:Code', ns).text
             options = lineItem.findall('ofda:SpecItem/ofda:Option', ns)
             base_sku = lineItem.find('ofda:SpecItem/ofda:Number', ns).text
+            qty = lineItem.find('ofda:Quantity', ns).text
             #Build Product Line specific sku
             if (enterprise_code == 'SKU'):
                 if (catalog_code == 'ECS'):
@@ -86,6 +89,7 @@ class import_job(models.Model):
                         if (next_code):
                             next_code = False
                             add_sku.insert(0, '-' + code)
+                            sif_options.insert(0, code)
                         else:
                             if (code == 'FAB'):
                                 next_code = True
@@ -93,9 +97,37 @@ class import_job(models.Model):
                                 next_code = True
                             if (code == 'WB'):
                                 add_sku.insert(0, '-WB')
-                    _logger.info(base_sku + "".join(add_sku))
+                                sif_options.insert(0, "WB")
+                    search_sku = base_sku + "".join(add_sku)
+                    sif_opts = "|".join(sif_options)
+                    _logger.info(search_sku)
 
-        import_job_id = res.id
+            import_row_vals = {
+                'import_job_id': import_job_id,
+                'sif_sku': base_sku,
+                'search_sku': search_sku,
+                'qty': qty,
+                'sif_options': sif_opts,
+                'needs_matching': False
+            }
 
+            #Search Database
+            p_search = Product.search([('default_code', '=', search_sku)])
+            if(len(p_search) == 0):
+                # No default product found search for a matched product
+                mp_search = Matched_Product.search([('sif_sku', '=', 'base_sku'),
+                                                    ('sif_optiosn', '=', sif_opts)])
+                if(len(mp_search) == 0):
+                    import_row_vals['needs_matching'] = True
+                    new_status = "needs_matching"
+                else:
+                    import_row_vals['product_id'] = mp_search.product_id.id
+                    import_row_vals['matched_product_id'] = mp_search.id
+            else:
+                import_row_vals['product_id'] = p_search.id
+
+            self.env['import_job.import_item.lines'].create(import_row_vals)
+
+        res.state = new_status
         return res
 
