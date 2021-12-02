@@ -21,6 +21,7 @@ class ProductProduct(models.Model):
                 self.variant_description = variant_description
             else:
                 self.variant_description = ""
+            self.clear_caches()
 
     def _compute_computed_description(self):
         for record in self:
