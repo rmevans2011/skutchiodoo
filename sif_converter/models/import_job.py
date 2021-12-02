@@ -112,7 +112,7 @@ class import_job(models.Model):
                 'needs_matching': False
             }
 
-            #Search Database
+            #Search The Database
             p_search = Product.search([('default_code', '=', search_sku)])
             if(len(p_search) == 0):
                 # No default product found search for a matched product
