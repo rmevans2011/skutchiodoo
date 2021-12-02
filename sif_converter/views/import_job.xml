@@ -7,18 +7,19 @@
         <field name="arch" type="xml">
             <kanban>
                 <field name="id" />
-                <field name="customer_name" />
-                <field name="short_description" />
+                <field name="customer_id" />
+                <field name="customer_name"/>
+                <field name="state" />
                 <templates>
                     <t t-name="kanban-box">
                         <div t-attf-class="oe_kanban_global_click">
                             <div class="oe_kanban_details">
                                 <ul>
                                     <li>
-                                        Customer Name: <field name="customer_name" />
+                                        Customer Name: <field name="customer_id" />
                                     </li>
                                     <li>
-                                        Short Description: <field name="short_description" />
+                                        Status: <field name="state" />
                                     </li>
                                 </ul>
                             </div>
@@ -67,8 +68,6 @@
                 <sheet>
                     <group>
                         <field name="customer_id" />
-                        <field name="customer_name" />
-                        <field name="short_description" />
                         <field name="sif_file" />
                     </group> 
                     <!-- Split Main Group Into Two Groups -->

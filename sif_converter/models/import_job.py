@@ -13,8 +13,8 @@ class import_job(models.Model):
     _description = "Import Job"
 
     customer_id = fields.Many2one('res.partner', string='Customer', required=True, tracking=True)
-    customer_name = fields.Char(string='Customer Name', required=True, translate=True, tracking=True)
-    short_description = fields.Char(string="Short Description", tracking=True)
+    #customer_name = fields.Char(string='Customer Name', required=True, translate=True, tracking=True)
+    #short_description = fields.Char(string="Short Description", tracking=True)
     sif_file = fields.Binary(string="SIF File (.xml)")
 
     state = fields.Selection([
