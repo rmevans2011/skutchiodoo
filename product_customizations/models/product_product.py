@@ -10,9 +10,9 @@ class ProductProduct(models.Model):
 
     def _compute_computed_description(self):
         for record in self:
+            variant_description = ""
             _logger.info("Processing Record: " + str(record.id))
             if record.has_configurable_attributes:
-                variant_description = ""
                 for i in range(len(record.attribute_line_ids)):
                     variant_description += "\n\t- "
                     variant_description += record.attribute_line_ids[i].attribute_id.product_display_name + ": " \
