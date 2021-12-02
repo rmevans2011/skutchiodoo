@@ -10,11 +10,12 @@ class ProductProduct(models.Model):
     computed_description = fields.Text(string="Base Product Description", compute="_compute_computed_description")
 
     def _compute_computed_description(self):
-        if self.variant_description != "":
-            self.computed_description = "\n"+self.product_tmpl_id.description_sale+\
-                                        "\nSelected Options:"+self.variant_description
-        else:
-            self.computed_description = "\n" + self.product_tmpl_id.description_sale
+        for record in self:
+            if record.variant_description != "":
+                record.computed_description = "\n"+record.product_tmpl_id.description_sale+\
+                                            "\nSelected Options:"+record.variant_description
+            else:
+                record.computed_description = "\n" + record.product_tmpl_id.description_sale
 
 
     @api.model_create_multi
