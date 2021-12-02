@@ -25,9 +25,16 @@ class ProductProduct(models.Model):
     def _compute_computed_description(self):
         for record in self:
             _logger.info("Processing Record: " + str(record.id))
+            if record.has_configurable_attributes:
+                variant_description = ""
+                for i in range(len(record.attribute_line_ids)):
+                    variant_description += "\n\t- "
+                    variant_description += record.attribute_line_ids[i].attribute_id.product_display_name + ": " \
+                                           + record.product_template_attribute_value_ids[i].product_attribute_value_id.name \
+                                           + " (" + record.product_template_attribute_value_ids[i].product_attribute_value_id.sku + ")"
             if record.variant_description != "":
                 record.computed_description = "\n"+record.product_tmpl_id.description_sale+\
-                                            "\nSelected Options:"+record.variant_description
+                                            "\nSelected Options:"+variant_description
             else:
                 record.computed_description = "\n" + record.product_tmpl_id.description_sale
 
