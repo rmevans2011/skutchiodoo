@@ -144,7 +144,7 @@ class import_job(models.Model):
                             'default_code': search_sku,
                             'hide_description': True,
                             'categ_id': mfg_cat.id,
-                            'base_description': '0',
+                            'base_description': '- hide',
                             'box_length': '0',
                             'box_width': '0',
                             'box_height': '0',
