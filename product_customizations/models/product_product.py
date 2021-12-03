@@ -41,14 +41,11 @@ class ProductProduct(models.Model):
                                                + " (" + record.product_template_attribute_value_ids[i].product_attribute_value_id.sku + ")"
                     previous_display_name = record.attribute_line_ids[i].attribute_id.product_display_name
                     previous_sku = record.product_template_attribute_value_ids[i].product_attribute_value_id.sku
-            if not record.product_tmpl_id.hide_description:
-                if variant_description != "":
-                    record.computed_description = "\n"+record.product_tmpl_id.description_sale+\
-                                                "\nSelected Options:"+variant_description
-                else:
-                    record.computed_description = "\n" + record.product_tmpl_id.description_sale
+            if variant_description != "":
+                record.computed_description = "\n"+record.product_tmpl_id.description_sale+\
+                                            "\nSelected Options:"+variant_description
             else:
-                record.computed_description = ""
+                record.computed_description = "\n" + record.product_tmpl_id.description_sale
 
 
     @api.model_create_multi
