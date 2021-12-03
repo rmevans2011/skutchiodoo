@@ -132,10 +132,11 @@ class import_job(models.Model):
                         mfg_cat = prod_cat.search([('name', '=', enterprise_code)])
                         if(len(mfg_cat) == 0):
                             vs = prod_cat.search([('name', '=', '11- Vendor Specific Products')])
-                            prod_cat.create({
+                            mfg_cat = prod_cat.create({
                                 'name': enterprise_code,
                                 'parent_id': vs.id
                             })
+                        _logger.info(mfg_cat.id)
                     else:
                         import_row_vals['needs_matching'] = True
                         new_status = "needs_matching"
