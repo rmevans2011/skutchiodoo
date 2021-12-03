@@ -142,7 +142,8 @@ class import_job(models.Model):
                             'list_price': lineItem.find('ofda:Price/ofda:EndCustomerPrice', ns).text,
                             'standard_price': lineItem.find('ofda:Price/ofda:OrderDealerPrice', ns).text,
                             'default_code': search_sku,
-                            'hide_description': True
+                            'hide_description': True,
+                            'categ_id': mfg_cat.id
                         })
                         import_row_vals['product_id'] = product.id
                     else:
