@@ -13,11 +13,34 @@ class ProductProduct(models.Model):
             variant_description = ""
             _logger.info("Processing Record: " + str(record.id))
             if record.has_configurable_attributes:
+                previous_display_name = ""
+                previous_sku = ""
                 for i in range(len(record.attribute_line_ids)):
                     variant_description += "\n\t- "
-                    variant_description += record.attribute_line_ids[i].attribute_id.product_display_name + ": " \
-                                           + record.product_template_attribute_value_ids[i].product_attribute_value_id.name \
-                                           + " (" + record.product_template_attribute_value_ids[i].product_attribute_value_id.sku + ")"
+                    if(previous_display_name == "Worksurface Color"):
+                        if((previous_sku == "XD-1008") or (previous_sku == "XD-1021")):
+                            if(record.product_template_attribute_value_ids[i].product_attribute_value_id.sku == "CHG"):
+                                edge_string = "Maple (XD-1008)"
+                            else:
+                                edge_string = "Driftwood (XD-1021)"
+                        if ((previous_sku == "XD-1001") or (previous_sku == "XD-1009")):
+                            if (record.product_template_attribute_value_ids[i].product_attribute_value_id.sku == "CHG"):
+                                edge_string = "White (XD-1009)"
+                            else:
+                                edge_string = "Light Gray (XD-1001)"
+                        if ((previous_sku == "XD-1026") or (previous_sku == "XD-1025")):
+                            if (record.product_template_attribute_value_ids[i].product_attribute_value_id.sku == "CHG"):
+                                edge_string = "Sea Salt (XD-1026)"
+                            else:
+                                edge_string = "Black Oak (XD-1025)"
+                        variant_description += record.attribute_line_ids[i].attribute_id.product_display_name + ": " \
+                                               + edge_string
+                    else:
+                        variant_description += record.attribute_line_ids[i].attribute_id.product_display_name + ": " \
+                                               + record.product_template_attribute_value_ids[i].product_attribute_value_id.name \
+                                               + " (" + record.product_template_attribute_value_ids[i].product_attribute_value_id.sku + ")"
+                    previous_display_name = record.attribute_line_ids[i].attribute_id.product_display_name
+                    previous_sku = record.product_template_attribute_value_ids[i].product_attribute_value_id.sku
             if variant_description != "":
                 record.computed_description = "\n"+record.product_tmpl_id.description_sale+\
                                             "\nSelected Options:"+variant_description
