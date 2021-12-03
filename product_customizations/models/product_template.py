@@ -125,12 +125,24 @@ class ProductTemplate(models.Model):
             if 'default_code' in vals:
                 vals['variant_sku'] = vals['default_code']
             if ('product_length' in vals) & ('product_width' in vals) & ('product_height' in vals):
-                product_string = '\n- Product Dimensions: '+vals['product_length']+'"L x '+vals['product_width']+'"W x '+vals['product_height']+'"H'
+                if(vals['product_length'] == '0') or (vals['product_width'] == '0') or (vals['product_height'] == '0'):
+                    product_string = ''
+                else:
+                    product_string = '\n- Product Dimensions: '+vals['product_length']+'"L x '+vals['product_width']+'"W x '+vals['product_height']+'"H'
             if ('box_length' in vals) & ('box_width' in vals) & ('box_height' in vals):
-                box_string = '\n- Box Dimensions: '+vals['box_length']+'"L x '+vals['box_width']+'"W x '+vals['box_height']+'"H'
+                if (vals['box_length'] == '0') or (vals['box_width'] == '0') or (vals['box_height'] == '0'):
+                    box_string = ''
+                else:
+                    box_string = '\n- Box Dimensions: '+vals['box_length']+'"L x '+vals['box_width']+'"W x '+vals['box_height']+'"H'
             if 'product_weight' in vals:
-                weight_string = '\n- Weight: '+str(vals['product_weight'])+'lbs.'
-            vals['description_sale'] = vals['base_description']+product_string+box_string+weight_string
+                if(vals['product_weight'] > 0):
+                    weight_string = '\n- Weight: '+str(vals['product_weight'])+'lbs.'
+                else:
+                    weight_string = ''
+            if vals['base_description'] != '0':
+                vals['description_sale'] = vals['base_description']+product_string+box_string+weight_string
+            else:
+                vals['description_sale'] = product_string + box_string + weight_string
             self._sanitize_vals(vals)
         templates = super(ProductTemplate, self).create(vals_list)
         if "create_product_product" not in self._context:
@@ -201,10 +213,24 @@ class ProductTemplate(models.Model):
                 bd = vals['base_description']
             else:
                 bd = self.base_description
-            product_string = '\n- Product Dimensions: ' + pl + '"L x ' + pw + '"W x ' + ph + '"H'
-            box_string = '\n- Box Dimensions: ' + bl + '"L x ' + bw + '"W x ' + bh + '"H'
-            weight_string = '\n- Weight: ' + str(wght) + 'lbs.'
-            vals['description_sale'] = bd + product_string + box_string + weight_string
+
+            if (pl == '0') or (pw == '0') or (ph == '0'):
+                product_string = ''
+            else:
+                product_string = '\n- Product Dimensions: ' + pl + '"L x ' + pw + '"W x ' + ph + '"H'
+            if (bl == '0') or (bw == '0') or (bh == '0'):
+                box_string = ''
+            else:
+                box_string = '\n- Box Dimensions: ' + bl + '"L x ' + bw + '"W x ' + bh + '"H'
+            if (wght > 0):
+                weight_string = '\n- Weight: ' + str(wght) + 'lbs.'
+            else:
+                weight_string = ''
+
+            if bd != '0':
+                vals['description_sale'] = bd + product_string + box_string + weight_string
+            else:
+                vals['description_sale'] = product_string + box_string + weight_string
             res = super(ProductTemplate, self).write(vals)
             self.product_variant_ids.write({})
         else:
