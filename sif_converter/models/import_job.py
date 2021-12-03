@@ -98,9 +98,15 @@ class import_job(models.Model):
                             if (code == 'WB'):
                                 add_sku.insert(0, '-WB')
                                 sif_options.insert(0, "WB")
-                    search_sku = base_sku + "".join(add_sku)
-                    sif_opts = "|".join(sif_options)
-                    _logger.info(search_sku)
+            else:  # Handle Other Vendors
+                for option in options:
+                    code = option.find('ofda:Code', ns).text
+                    add_sku.insert(0, '-' + code)
+                    sif_options.insert(0, code)
+            search_sku = base_sku + "".join(add_sku)
+            sif_opts = "|".join(sif_options)
+            _logger.info(search_sku)
+
 
             import_row_vals = {
                 'import_job_id': import_job_id,
