@@ -101,8 +101,8 @@ class import_job(models.Model):
             else:  # Handle Other Vendors
                 for option in options:
                     code = option.find('ofda:Code', ns).text
-                    add_sku.insert(0, '-' + code)
-                    sif_options.insert(0, code)
+                    add_sku.append('-' + code)
+                    sif_options.append(code)
             search_sku = base_sku + "".join(add_sku)
             sif_opts = "|".join(sif_options)
             _logger.info(search_sku)
