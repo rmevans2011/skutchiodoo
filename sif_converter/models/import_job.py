@@ -153,7 +153,8 @@ class import_job(models.Model):
                             'product_width': '0',
                             'product_weight': 1,
                         })
-                        #import_row_vals['product_id'] = product.id
+                        _logger.info(product.product_variant_id.id)
+                        #import_row_vals['product_id'] = product.product_variant_id.id
                     else:
                         import_row_vals['needs_matching'] = True
                         new_status = "needs_matching"
