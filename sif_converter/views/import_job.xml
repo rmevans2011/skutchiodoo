@@ -88,12 +88,14 @@
                                     <field name="qty" />
                                     <field name="product_id" />
                                     <field name="needs_matching" />
+                                    <field name="create_product" />
                                 </tree>
                                 <form>
                                     <group>
                                         <field name="sif_sku" />
                                         <field name="sif_options" />
                                         <field name="product_id" />
+                                        <field name="create_product" />
                                     </group>
                                 </form>
                             </field>
