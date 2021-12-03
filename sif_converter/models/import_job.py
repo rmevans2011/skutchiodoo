@@ -123,7 +123,7 @@ class import_job(models.Model):
             if(len(p_search) == 0):
                 # No default product found search for a matched product
                 mp_search = Matched_Product.search([('sif_sku', '=', 'base_sku'),
-                                                    ('sif_optiosn', '=', sif_opts)])
+                                                    ('sif_options', '=', sif_opts)])
                 if(len(mp_search) == 0):
                     import_row_vals['needs_matching'] = True
                     new_status = "needs_matching"
