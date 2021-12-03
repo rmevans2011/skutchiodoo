@@ -115,6 +115,8 @@ class import_job(models.Model):
                 'qty': qty,
                 'sif_options': sif_opts,
                 'generic_code': 'need_to_remove',
+                'vendor_code': enterprise_code,
+                'create_product': False,
                 'needs_matching': False
             }
 
@@ -125,8 +127,18 @@ class import_job(models.Model):
                 mp_search = Matched_Product.search([('sif_sku', '=', 'base_sku'),
                                                     ('sif_options', '=', sif_opts)])
                 if(len(mp_search) == 0):
-                    import_row_vals['needs_matching'] = True
-                    new_status = "needs_matching"
+                    if(enterprise_code != "SKU"):
+                        prod_cat = self.env['product.category']
+                        mfg_cat = prod_cat.search([('name', '=', enterprise_code)])
+                        if(len(mfg_cat) == 0):
+                            vs = prod_cat.search([('name', '=', '11- Vendor Specific Products')])
+                            prod_cat.create({
+                                'name': enterprise_code,
+                                'parent_id': vs.id
+                            })
+                    else:
+                        import_row_vals['needs_matching'] = True
+                        new_status = "needs_matching"
                 else:
                     import_row_vals['product_id'] = mp_search.product_id.id
                     import_row_vals['matched_product_id'] = mp_search.id
