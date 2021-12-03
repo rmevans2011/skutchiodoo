@@ -144,14 +144,14 @@ class import_job(models.Model):
                             'default_code': search_sku,
                             'hide_description': True,
                             'categ_id': mfg_cat.id,
-                            'base_description': '- hide',
+                            'base_description': '- Product Sku: ' + search_sku,
                             'box_length': '0',
                             'box_width': '0',
                             'box_height': '0',
                             'product_length': '0',
                             'product_height': '0',
                             'product_width': '0',
-                            'product_weight': 1,
+                            'product_weight': 0,
                         })
                         _logger.info(product.product_variant_id.id)
                         #import_row_vals['product_id'] = product.product_variant_id.id
