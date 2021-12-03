@@ -67,6 +67,7 @@
                 <sheet>
                     <group>
                         <field name="customer_id" />
+                        <field name="estimate_id" attrs="{'invisible': [('state', '!=;', False)], 'readonly': True}"/>
                         <field name="sif_file" />
                     </group> 
                     <!-- Split Main Group Into Two Groups -->
