@@ -143,7 +143,15 @@ class import_job(models.Model):
                             'standard_price': lineItem.find('ofda:Price/ofda:OrderDealerPrice', ns).text,
                             'default_code': search_sku,
                             'hide_description': True,
-                            'categ_id': mfg_cat.id
+                            'categ_id': mfg_cat.id,
+                            'base_description': '0',
+                            'box_length': '0',
+                            'box_width': '0',
+                            'box_height': '0',
+                            'product_length': '0',
+                            'product_height': '0',
+                            'product_width': '0',
+                            'product_weight': 1,
                         })
                         import_row_vals['product_id'] = product.id
                     else:
