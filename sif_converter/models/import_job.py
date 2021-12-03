@@ -137,7 +137,7 @@ class import_job(models.Model):
                                 'parent_id': vs.id
                             })
                         _logger.info(mfg_cat.id)
-                        product = self.env['product.template.create'].create({
+                        product = self.env['product.template'].create({
                             'name': lineItem.find('ofda:SpecItem/ofda:Description', ns).text,
                             'list_price': lineItem.find('ofda:Price/ofda:EndCustomerPrice', ns).text,
                             'standard_price': lineItem.find('ofda:Price/ofda:OrderDealerPrice', ns).text,
