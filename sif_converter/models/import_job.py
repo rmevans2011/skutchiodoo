@@ -45,6 +45,7 @@ class import_job(models.Model):
                 'product_id': line_item.product_id.id
             }
             self.env['sale.order.line'].create(item_vals)
+        self.estimate_id = order.id
         self.state = 'done'
 
     def action_estimate(self):
