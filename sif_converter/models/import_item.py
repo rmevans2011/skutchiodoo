@@ -15,7 +15,6 @@ class import_item(models.Model):
     vendor_code = fields.Char(string='Vendor Code')
     qty = fields.Integer(string='Quantity')
     needs_matching = fields.Boolean(string='Needs to be matched')
-    create_product = fields.Boolean(string='Make New Product')
     product_id = fields.Many2one('product.product', string='Matched Product')
     matched_product_id = fields.Many2one('sif_converter.matched_product', string='Matched Product Internal')
 
