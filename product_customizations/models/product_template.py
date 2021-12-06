@@ -140,8 +140,8 @@ class ProductTemplate(models.Model):
             else:
                 vals['description_sale'] = vals['base_description'] + product_string + box_string + weight_string
 
-            vals['taxes_id'] = [self.env['account.tax'].find([('name', '=', 'AVATAX')]).id]
-            vals['tax_code_id'] = self.env['product.tax.code'].find([('name', '=', 'P0000000')]).id
+            vals['taxes_id'] = [self.env['account.tax'].search([('name', '=', 'AVATAX')]).id]
+            vals['tax_code_id'] = self.env['product.tax.code'].search([('name', '=', 'P0000000')]).id
             self._sanitize_vals(vals)
         templates = super(ProductTemplate, self).create(vals_list)
         if "create_product_product" not in self._context:
