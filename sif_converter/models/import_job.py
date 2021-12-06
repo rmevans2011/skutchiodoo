@@ -109,7 +109,7 @@ class import_job(models.Model):
             sif_opts = "|".join(sif_options)
             _logger.info(search_sku)
 
-
+            # create import row
             import_row_vals = {
                 'import_job_id': import_job_id,
                 'sif_sku': base_sku,
