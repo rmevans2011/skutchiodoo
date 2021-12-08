@@ -65,6 +65,7 @@ class import_job(models.Model):
 
         Product = self.env['product.product']
         Matched_Product = self.env['sif_converter.matched_product']
+        Sif_Sku = self.env['sif_converter.sif_sku']
 
         #Load XML File
         decoded_file = base64.b64decode(vals['sif_file'])
@@ -75,6 +76,7 @@ class import_job(models.Model):
         lineItems = tree.findall('./ofda:PurchaseOrder/ofda:OrderLineItem', ns)
 
         for lineItem in lineItems:
+            sif_search_id = 0
             next_code = False
             add_sku = []
             sif_options = []
@@ -83,24 +85,26 @@ class import_job(models.Model):
             options = lineItem.findall('ofda:SpecItem/ofda:Option', ns)
             base_sku = lineItem.find('ofda:SpecItem/ofda:Number', ns).text
             qty = lineItem.find('ofda:Quantity', ns).text
-            #Build Product Line specific sku
-            if (enterprise_code == 'SKU'):
-                if (catalog_code == 'ECS'):
-                    for option in options:
-                        code = option.find('ofda:Code', ns).text
-                        if (next_code):
-                            next_code = False
-                            add_sku.insert(0, '-' + code)
-                            sif_options.insert(0, code)
-                        else:
-                            if (code == 'FAB'):
-                                next_code = True
-                            if (code == 'PET'):
-                                next_code = True
-                            if (code == 'WB'):
-                                add_sku.insert(0, '-WB')
-                                sif_options.insert(0, "WB")
-            else:  # Handle Other Vendors
+            if enterprise_code == "SKU":
+                # Skutchi Products
+                _logger.info("Working On Skutchi Product")
+                for option in options:
+                    code = option.find('ofda:Code', ns).text
+                    if (next_code):
+                        next_code = False
+                        add_sku.insert(0, '-' + code)
+                        sif_options.insert(0, code)
+                    else:
+                        if (code == 'FAB'):
+                            next_code = True
+                        if (code == 'PET'):
+                            next_code = True
+                        if (code == 'WB'):
+                            add_sku.insert(0, '-WB')
+                            sif_options.insert(0, "WB")
+            else:
+                # Other Vendors Products
+                _logger.info("Working On other Products")
                 for option in options:
                     code = option.find('ofda:Code', ns).text
                     add_sku.append('-' + code)
@@ -121,51 +125,63 @@ class import_job(models.Model):
                 'needs_matching': False
             }
 
-            #Search The Database
-            p_search = Product.search([('default_code', '=', search_sku)])
-            if(len(p_search) == 0):
-                # No default product found search for a matched product
-                mp_search = Matched_Product.search([('sif_sku', '=', 'base_sku'),
-                                                    ('sif_options', '=', sif_opts)])
-                if(len(mp_search) == 0):
-                    if(enterprise_code != "SKU"):
-                        prod_cat = self.env['product.category']
-                        mfg_cat = prod_cat.search([('name', '=', enterprise_code)])
-                        if(len(mfg_cat) == 0):
-                            vs = prod_cat.search([('name', '=', '11- Vendor Specific Products')])
-                            mfg_cat = prod_cat.create({
-                                'name': enterprise_code,
-                                'parent_id': vs.id
-                            })
-                        _logger.info(mfg_cat.id)
-                        product = self.env['product.template'].create({
-                            'name': lineItem.find('ofda:SpecItem/ofda:Description', ns).text,
-                            'list_price': lineItem.find('ofda:Price/ofda:EndCustomerPrice', ns).text,
-                            'standard_price': lineItem.find('ofda:Price/ofda:OrderDealerPrice', ns).text,
-                            'default_code': search_sku,
-                            'hide_description': True,
-                            'categ_id': mfg_cat.id,
-                            'base_description': '- Product Sku: ' + search_sku,
-                            'box_length': '0',
-                            'box_width': '0',
-                            'box_height': '0',
-                            'product_length': '0',
-                            'product_height': '0',
-                            'product_width': '0',
-                            'product_weight': 0,
-                        })
-                        _logger.info(product.product_variant_id.id)
-                        import_row_vals['product_id'] = product.product_variant_id.id
-                    else:
-                        import_row_vals['needs_matching'] = True
-                        new_status = "needs_matching"
-                else:
-                    import_row_vals['product_id'] = mp_search.product_id.id
-                    import_row_vals['matched_product_id'] = mp_search.id
+            #Check to see if there is a sif_sku
+            sifskus = Sif_Sku.search([('sif_sku', '=', base_sku)])
+            for sifsku in sifskus:
+                ps = Product.search([('default_code', '=', sifsku.odoo_sku + "".join(add_sku))])
+                if len(ps) != 0:
+                    sif_search_id = ps.id
+
+            # Check to see if we need to search the database
+            if sif_search_id != 0:
+                import_row_vals['product_id'] = sif_search_id
             else:
-                import_row_vals['product_id'] = p_search.id
+                p_search = Product.search([('default_code', '=', search_sku)])
+                if (len(p_search) == 0):
+                    # No default product found search for a matched product
+                    mp_search = Matched_Product.search([('sif_sku', '=', 'base_sku'),
+                                                        ('sif_options', '=', sif_opts)])
+                    if (len(mp_search) == 0):
+                        if (enterprise_code != "SKU"):
+                            prod_cat = self.env['product.category']
+                            mfg_cat = prod_cat.search([('name', '=', enterprise_code)])
+                            if (len(mfg_cat) == 0):
+                                vs = prod_cat.search([('name', '=', '11- Vendor Specific Products')])
+                                mfg_cat = prod_cat.create({
+                                    'name': enterprise_code,
+                                    'parent_id': vs.id
+                                })
+                            _logger.info(mfg_cat.id)
+                            product = self.env['product.template'].create({
+                                'name': lineItem.find('ofda:SpecItem/ofda:Description', ns).text,
+                                'list_price': lineItem.find('ofda:Price/ofda:EndCustomerPrice', ns).text,
+                                'standard_price': lineItem.find('ofda:Price/ofda:OrderDealerPrice', ns).text,
+                                'default_code': search_sku,
+                                'hide_description': True,
+                                'categ_id': mfg_cat.id,
+                                'base_description': '- Product Sku: ' + search_sku,
+                                'box_length': '0',
+                                'box_width': '0',
+                                'box_height': '0',
+                                'product_length': '0',
+                                'product_height': '0',
+                                'product_width': '0',
+                                'product_weight': 0,
+                            })
+                            _logger.info(product.product_variant_id.id)
+                            import_row_vals['product_id'] = product.product_variant_id.id
+                        else:
+                            import_row_vals['needs_matching'] = True
+                            new_status = "needs_matching"
+                    else:
+                        import_row_vals['product_id'] = mp_search.product_id.id
+                        import_row_vals['matched_product_id'] = mp_search.id
+                else:
+                    import_row_vals['product_id'] = p_search.id
+
 
             self.env['import_job.import_item.lines'].create(import_row_vals)
+
 
         res.state = new_status
         return res
