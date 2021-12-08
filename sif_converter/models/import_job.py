@@ -48,6 +48,7 @@ class import_job(models.Model):
                     'qty': line_item.qty
                 }
 
+        _logger.info(sale_order_lines)
 
         for so in sale_order_lines:
             item_vals = {
