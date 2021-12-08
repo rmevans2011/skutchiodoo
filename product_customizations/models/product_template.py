@@ -274,3 +274,4 @@ class ProductTemplate(models.Model):
             template.default_code = template.product_variant_ids.default_code
         for template in (self - unique_variants):
             template.default_code = template.product_variant_ids.default_code
+
