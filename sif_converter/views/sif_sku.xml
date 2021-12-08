@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_sif_sku_form" model="ir.ui.view">
+        <field name="name">sif_converter.sif_sku.form</field>
+        <field name="model">sif_converter.sif_sku</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="sif_sku" />
+                        <field name="odoo_sku" />
+                    </group>
+                    <!-- Split Main Group Into Two Groups -->
+                    <!--
+                        <group>
+                            <group>
+                            </group>
+                            <group>
+                            </group>
+                        </group>
+                    -->
+                </sheet>
+<!--                <div class="oe_chatter">-->
+<!--                    <field name="message_follower_ids" />-->
+<!--                    <field name="activity_ids" />-->
+<!--                    <field name="message_ids" />-->
+<!--                </div>-->
+            </form>
+        </field>
+    </record>
+
+    <record id="view_sif_sku_tree" model="ir.ui.view">
+        <field name="name">sif_converter.sif_sku.tree</field>
+        <field name="model">sif_converter.sif_sku</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="id" />
+                <field name="sif_sku" />
+                <field name="odoo_sku" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="sif_converter_sif_skus" model="ir.actions.act_window">
+            <field name="name">Sif SKUs</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sif_converter.sif_sku</field>
+            <field name="view_mode">tree,form</field>
+            <!--<field name="search_view_id" ref="sale_order_view_search_inherit_sale"/>
+            <field name="context">{}</field>
+            <field name="domain">[('state', 'not in', ('draft', 'sent', 'cancel'))]</field>-->
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new sif sku to odoo sku mapping!
+                </p>
+            </field>
+    </record>
+
+    <menuitem id="sif_converter_products_sif_skus"
+              name="Sif SKUs"
+              parent="sif_converter_products_root"
+              action="sif_converter_sif_skus"
+              sequence="22" />
+</odoo>
