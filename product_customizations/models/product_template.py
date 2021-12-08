@@ -172,6 +172,8 @@ class ProductTemplate(models.Model):
         self._sanitize_vals(vals)
         _logger.info(vals)
         _logger.info("Box Width: " + self.box_width)
+        if 'default_code' in vals:
+            vals['variant_sku'] = vals['default_code']
         if 'uom_id' in vals or 'uom_po_id' in vals:
             uom_id = self.env['uom.uom'].browse(vals.get('uom_id')) or self.uom_id
             uom_po_id = self.env['uom.uom'].browse(vals.get('uom_po_id')) or self.uom_po_id
