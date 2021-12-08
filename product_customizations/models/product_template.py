@@ -261,6 +261,7 @@ class ProductTemplate(models.Model):
                                     i].product_attribute_value_id.sku
                             _logger.info("Variant SKU: " + variant_sku + end_sku)
                             prod_prod.default_code = variant_sku + end_sku
+            self.default_code = vals['default_code']
         return res
 
     @api.onchange('description_sale')
