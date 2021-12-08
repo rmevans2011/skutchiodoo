@@ -129,6 +129,7 @@ class ProductTemplate(models.Model):
             product_string = ''
             if 'default_code' in vals:
                 vals['variant_sku'] = vals['default_code']
+                vals['barcode'] = vals['default_code']
             if ('product_length' in vals) & ('product_width' in vals) & ('product_height' in vals):
                 product_string = '\n- Product Dimensions: '+vals['product_length']+'"L x '+vals['product_width']+'"W x '+vals['product_height']+'"H'
             if ('box_length' in vals) & ('box_width' in vals) & ('box_height' in vals):
@@ -174,6 +175,7 @@ class ProductTemplate(models.Model):
         _logger.info("Box Width: " + self.box_width)
         if 'default_code' in vals:
             vals['variant_sku'] = vals['default_code']
+            vals['barcode'] = vals['default_code']
         if 'uom_id' in vals or 'uom_po_id' in vals:
             uom_id = self.env['uom.uom'].browse(vals.get('uom_id')) or self.uom_id
             uom_po_id = self.env['uom.uom'].browse(vals.get('uom_po_id')) or self.uom_po_id
@@ -261,6 +263,7 @@ class ProductTemplate(models.Model):
                                     i].product_attribute_value_id.sku
                             _logger.info("Variant SKU: " + variant_sku + end_sku)
                             prod_prod.default_code = variant_sku + end_sku
+                            prod_prod.barcode = variant_sku + end_sku
         return res
 
     @api.onchange('description_sale')
