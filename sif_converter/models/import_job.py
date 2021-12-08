@@ -128,6 +128,7 @@ class import_job(models.Model):
             #Check to see if there is a sif_sku
             sifskus = Sif_Sku.search([('sif_sku', '=', base_sku)])
             for sifsku in sifskus:
+                _logger.info("Searching for: " + sifsku.odoo_sku + "".join(add_sku))
                 ps = Product.search([('default_code', '=', sifsku.odoo_sku + "".join(add_sku))])
                 if len(ps) != 0:
                     sif_search_id = ps.id
