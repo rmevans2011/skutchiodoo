@@ -172,6 +172,8 @@ class ProductTemplate(models.Model):
         self._sanitize_vals(vals)
         _logger.info(vals)
         _logger.info("Box Width: " + self.box_width)
+        if 'default_code' in vals:
+            vals['variant_sku'] = vals['default_code']
         if 'uom_id' in vals or 'uom_po_id' in vals:
             uom_id = self.env['uom.uom'].browse(vals.get('uom_id')) or self.uom_id
             uom_po_id = self.env['uom.uom'].browse(vals.get('uom_po_id')) or self.uom_po_id
@@ -242,8 +244,33 @@ class ProductTemplate(models.Model):
             # Performance discussion outcome:
             # Actually touch all variants to avoid using filtered on the image_variant_1920 field
             self.product_variant_ids.write({})
+
+        if 'default_code' in vals:
+            if self.has_configurable_attributes:
+                for prod_prod in self.product_variant_ids:
+                    if prod_prod.product_tmpl_id.variant_sku:
+                        variant_sku = prod_prod.product_tmpl_id.variant_sku
+                        _logger.info("Variant SKU: " + variant_sku)
+                        if prod_prod.has_configurable_attributes:
+                            variant_sku_parts = []
+                            end_sku = ""
+                            for i in range(len(prod_prod.attribute_line_ids)):
+                                variant_sku_parts.insert(0, "-" + prod_prod.product_template_attribute_value_ids[
+                                    i].product_attribute_value_id.sku)
+                                end_sku += "-" + prod_prod.product_template_attribute_value_ids[
+                                    i].product_attribute_value_id.sku
+                            _logger.info("Variant SKU: " + variant_sku + end_sku)
+                            prod_prod.default_code = variant_sku + end_sku
         return res
 
     @api.onchange('description_sale')
     def _onchange_description_sale(self):
         _logger.info("Product_Template Sale Description Changed")
+
+    @api.depends('product_variant_ids', 'product_variant_ids.default_code')
+    def _compute_default_code(self):
+        unique_variants = self.filtered(lambda template: len(template.product_variant_ids) == 1)
+        for template in unique_variants:
+            template.default_code = template.product_variant_ids.default_code
+        #for template in (self - unique_variants):
+            #template.default_code = False
