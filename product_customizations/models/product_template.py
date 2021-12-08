@@ -174,6 +174,21 @@ class ProductTemplate(models.Model):
         _logger.info("Box Width: " + self.box_width)
         if 'default_code' in vals:
             vals['variant_sku'] = vals['default_code']
+            if self.has_configurable_attributes:
+                for prod_prod in self.product_variant_ids:
+                    if prod_prod.product_tmpl_id.variant_sku:
+                        variant_sku = prod_prod.product_tmpl_id.variant_sku
+                        _logger.info("Variant SKU: " + variant_sku)
+                        if prod_prod.has_configurable_attributes:
+                            variant_sku_parts = []
+                            end_sku = ""
+                            for i in range(len(prod_prod.attribute_line_ids)):
+                                variant_sku_parts.insert(0, "-" + prod_prod.product_template_attribute_value_ids[
+                                    i].product_attribute_value_id.sku)
+                                end_sku += "-" + prod_prod.product_template_attribute_value_ids[
+                                    i].product_attribute_value_id.sku
+                            _logger.info("Variant SKU: " + variant_sku + end_sku)
+                            prod_prod.default_code = variant_sku + end_sku
         if 'uom_id' in vals or 'uom_po_id' in vals:
             uom_id = self.env['uom.uom'].browse(vals.get('uom_id')) or self.uom_id
             uom_po_id = self.env['uom.uom'].browse(vals.get('uom_po_id')) or self.uom_po_id
