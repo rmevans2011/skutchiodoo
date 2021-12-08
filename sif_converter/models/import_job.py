@@ -49,11 +49,11 @@ class import_job(models.Model):
                 }
 
 
-        for sale_order_line in sale_order_lines:
+        for so in sale_order_lines:
             item_vals = {
                 'order_id': order.id,
-                'product_uom_qty': sale_order_line.qty,
-                'product_id': sale_order_line.prod_id
+                'product_uom_qty': sale_order_lines.get(so)['qty'],
+                'product_id': sale_order_lines.get(so)['prod_id']
             }
             self.env['sale.order.line'].create(item_vals)
         self.estimate_id = order.id
