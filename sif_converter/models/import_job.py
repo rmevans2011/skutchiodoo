@@ -37,12 +37,23 @@ class import_job(models.Model):
             'partner_id': self.customer_id.id
         }
         order = self.env['sale.order'].create(order_vals)
+        sale_order_lines = {}
         line_items = self.import_item_ids
         for line_item in line_items:
+            if(str(line_item.product_id.id)+"p" in sale_order_lines):
+                sale_order_lines[str(line_item.product_id.id)+"p"]['qty'] += line_item.qty
+            else:
+                sale_order_lines[str(line_item.product_id.id)+"p"] = {
+                    'prod_id': line_item.product_id.id,
+                    'qty': line_item.qty
+                }
+
+
+        for sale_order_line in sale_order_lines:
             item_vals = {
                 'order_id': order.id,
-                'product_uom_qty': line_item.qty,
-                'product_id': line_item.product_id.id
+                'product_uom_qty': sale_order_line['qty'],
+                'product_id': sale_order_line['prod_id']
             }
             self.env['sale.order.line'].create(item_vals)
         self.estimate_id = order.id
