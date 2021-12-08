@@ -261,9 +261,16 @@ class ProductTemplate(models.Model):
                                     i].product_attribute_value_id.sku
                             _logger.info("Variant SKU: " + variant_sku + end_sku)
                             prod_prod.default_code = variant_sku + end_sku
-            self.default_code = vals['default_code']
         return res
 
     @api.onchange('description_sale')
     def _onchange_description_sale(self):
         _logger.info("Product_Template Sale Description Changed")
+
+    @api.depends('product_variant_ids', 'product_variant_ids.default_code')
+    def _compute_default_code(self):
+        unique_variants = self.filtered(lambda template: len(template.product_variant_ids) == 1)
+        for template in unique_variants:
+            template.default_code = template.product_variant_ids.default_code
+        for template in (self - unique_variants):
+            template.default_code = template.product_variant_ids.default_code
