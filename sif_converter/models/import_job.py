@@ -41,13 +41,14 @@ class import_job(models.Model):
         line_items = self.import_item_ids
         for line_item in line_items:
             if(str(line_item.product_id.id)+"p" in sale_order_lines):
-                sale_order_lines[str(line_item.product_id.id)+"p"]['qty'] += line_item.qty
+                sale_order_lines.get(str(line_item.product_id.id)+"p")['qty'] += line_item.qty
             else:
                 sale_order_lines[str(line_item.product_id.id)+"p"] = {
                     'prod_id': line_item.product_id.id,
                     'qty': line_item.qty
                 }
 
+        _logger.info(sale_order_lines)
 
         for so in sale_order_lines:
             item_vals = {
