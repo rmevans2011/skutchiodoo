@@ -277,3 +277,14 @@ class ProductTemplate(models.Model):
             template.default_code = template.product_variant_ids.default_code
         #for template in (self - unique_variants):
             #template.default_code = False
+
+    @api.returns('self', lambda value: value.id)
+    def copy(self, default=None):
+        # TDE FIXME: should probably be copy_data
+        self.ensure_one()
+        if default is None:
+            default = {}
+        if 'name' not in default:
+            default['name'] = _("%s (copy)", self.name)
+        default['barcode'] = False
+        return super(ProductTemplate, self).copy(default=default)
