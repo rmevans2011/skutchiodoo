@@ -84,5 +84,6 @@ class ProductProduct(models.Model):
         For convenience the template is copied instead and its first variant is
         returned.
         """
+        self.barcode = False
         default['barcode'] = False
         return self.product_tmpl_id.copy(default=default).product_variant_id
