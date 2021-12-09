@@ -75,3 +75,14 @@ class ProductProduct(models.Model):
     @api.onchange('product_tmpl_id.description_sale')
     def _onchange_description_sale(self):
         _logger.info("Sale Description Changed")
+
+    @api.returns('self', lambda value: value.id)
+    def copy(self, default=None):
+        """Variants are generated depending on the configuration of attributes
+        and values on the template, so copying them does not make sense.
+
+        For convenience the template is copied instead and its first variant is
+        returned.
+        """
+        default['barcode'] = False
+        return self.product_tmpl_id.copy(default=default).product_variant_id
