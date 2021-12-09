@@ -1,6 +1,7 @@
 import itertools
 import logging
 from collections import defaultdict
+import time
 
 from odoo import api, fields, models, tools, _, SUPERUSER_ID
 from odoo.exceptions import ValidationError, RedirectWarning, UserError
@@ -286,5 +287,5 @@ class ProductTemplate(models.Model):
             default = {}
         if 'name' not in default:
             default['name'] = _("%s (copy)", self.name)
-        default['barcode'] = False
+        default['barcode'] = time.time()
         return super(ProductTemplate, self).copy(default=default)
