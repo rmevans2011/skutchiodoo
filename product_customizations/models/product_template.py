@@ -287,5 +287,5 @@ class ProductTemplate(models.Model):
             default = {}
         if 'name' not in default:
             default['name'] = _("%s (copy)", self.name)
-        default['barcode'] = time.time()
+        default['variant_sku'] = time.time()
         return super(ProductTemplate, self).copy(default=default)
