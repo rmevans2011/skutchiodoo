@@ -9,7 +9,7 @@ class import_item(models.Model):
 
     import_job_id = fields.Many2one('sif_converter.import_job', string='Import Job')
     sif_sku = fields.Char(string='Sif Sku', required=True, translate=True)
-    sif_options = fields.Char(string='Sif Options', required=True)
+    sif_options = fields.Char(string='Sif Options')
     generic_code = fields.Char(string='Generic Code', required=True)
     search_sku = fields.Char(string='Search SKU')
     vendor_code = fields.Char(string='Vendor Code')
