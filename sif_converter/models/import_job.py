@@ -118,6 +118,7 @@ class import_job(models.Model):
                                 pass
                             else:
                                 add_sku.insert(0,'-'+code)
+                                sif_options.insert(0, code)
             else:
                 # Other Vendors Products
                 _logger.info("Working On other Products")
