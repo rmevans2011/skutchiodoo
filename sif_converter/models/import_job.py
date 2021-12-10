@@ -94,7 +94,7 @@ class import_job(models.Model):
             enterprise_code = lineItem.find('ofda:VendorRef', ns).text
             catalog_code = lineItem.find('ofda:SpecItem/ofda:Catalog/ofda:Code', ns).text
             options = lineItem.findall('ofda:SpecItem/ofda:Option', ns)
-            base_sku = lineItem.find('ofda:SpecItem/ofda:Number', ns).text
+            base_sku = (lineItem.find('ofda:SpecItem/ofda:Number', ns).text).upper()
             qty = lineItem.find('ofda:Quantity', ns).text
             if enterprise_code == "SKU":
                 # Skutchi Products
@@ -108,11 +108,16 @@ class import_job(models.Model):
                     else:
                         if (code == 'FAB'):
                             next_code = True
-                        if (code == 'PET'):
+                        elif (code == 'PET'):
                             next_code = True
-                        if (code == 'WB'):
+                        elif (code == 'WB'):
                             add_sku.insert(0, '-WB')
                             sif_options.insert(0, "WB")
+                        else:
+                            if(code == 'MOD-NO'):
+                                pass
+                            else:
+                                add_sku.insert(0,'-'+code)
             else:
                 # Other Vendors Products
                 _logger.info("Working On other Products")
