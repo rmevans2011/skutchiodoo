@@ -157,7 +157,7 @@ class import_job(models.Model):
                 p_search = Product.search([('default_code', '=', search_sku)])
                 if (len(p_search) == 0):
                     # No default product found search for a matched product
-                    mp_search = Matched_Product.search([('sif_sku', '=', 'base_sku'),
+                    mp_search = Matched_Product.search([('sif_sku', '=', base_sku),
                                                         ('sif_options', '=', sif_opts)])
                     if (len(mp_search) == 0):
                         if (enterprise_code != "SKU"):
