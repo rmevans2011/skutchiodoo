@@ -48,6 +48,7 @@ class import_job(models.Model):
                     sale_order_lines[str(line_item.product_id.id) + "p" + line_item.custom_notes] = {
                         'prod_id': line_item.product_id.id,
                         'qty': line_item.qty,
+                        'custom_notes': '\nCustom Modifications:\n- '+line_item.custom_notes,
                         'price_unit': product_price.list_price + line_item.upcharge_cost
                     }
                     _logger.info(sale_order_lines)
@@ -69,6 +70,8 @@ class import_job(models.Model):
             }
             if 'price_unit' in sale_order_lines.get(so):
                 item_vals['price_unit'] = sale_order_lines.get(so)['price_unit']
+            if 'custom_notes' in sale_order_lines.get(so):
+                item_vals['custom_notes'] = sale_order_lines.get(so)['custom_notes']
             self.env['sale.order.line'].create(item_vals)
         self.estimate_id = order.id
         self.state = 'done'
