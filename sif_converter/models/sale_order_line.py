@@ -6,4 +6,8 @@ class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
     custom_notes = fields.Text(string="Custom Notes")
-    display_description = fields.Text(string="Display Description")
+    display_description = fields.Text(string="Display Description",compute="_compute_display_description")
+
+    def _compute_display_description(self):
+        for rec in self:
+            rec.display_description = rec.product_id.computed_description
