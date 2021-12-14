@@ -40,13 +40,24 @@ class import_job(models.Model):
         sale_order_lines = {}
         line_items = self.import_item_ids
         for line_item in line_items:
-            if(str(line_item.product_id.id)+"p" in sale_order_lines):
-                sale_order_lines[str(line_item.product_id.id)+"p"]['qty'] += line_item.qty
+            if(line_item.is_custom):
+                if (str(line_item.product_id.id) + "p" + line_item.custom_notes in sale_order_lines):
+                    sale_order_lines[str(line_item.product_id.id) + "p"]['qty'] += line_item.qty
+                else:
+                    product_price = self.env['product.product'].search([('id', '=', line_item.product_id.id)])
+                    sale_order_lines[str(line_item.product_id.id) + "p" + line_item.custom_notes] = {
+                        'prod_id': line_item.product_id.id,
+                        'qty': line_item.qty,
+                        'price_unit': product_price.list_price + line_item.upcharge_cost
+                    }
             else:
-                sale_order_lines[str(line_item.product_id.id)+"p"] = {
-                    'prod_id': line_item.product_id.id,
-                    'qty': line_item.qty
-                }
+                if(str(line_item.product_id.id)+"p" in sale_order_lines):
+                    sale_order_lines[str(line_item.product_id.id)+"p"]['qty'] += line_item.qty
+                else:
+                    sale_order_lines[str(line_item.product_id.id)+"p"] = {
+                        'prod_id': line_item.product_id.id,
+                        'qty': line_item.qty
+                    }
 
 
         for so in sale_order_lines:
