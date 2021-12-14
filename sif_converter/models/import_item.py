@@ -18,7 +18,7 @@ class import_item(models.Model):
     product_id = fields.Many2one('product.product', string='Matched Product')
     matched_product_id = fields.Many2one('sif_converter.matched_product', string='Matched Product Internal')
     is_custom = fields.Boolean(string="Custom Product", default=False)
-    custom_notes = fields.Text(string="Custom Notes")
+    custom_notes = fields.Text(string="Custom Notes 3")
     upcharge_cost = fields.Float(string="Product Upcharge")
 
     @api.model
