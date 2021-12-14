@@ -91,6 +91,7 @@ class import_job(models.Model):
             next_code = False
             custom_product = False
             custom_text = ""
+            upcharge = 0
             add_sku = []
             sif_options = []
             enterprise_code = lineItem.find('ofda:VendorRef', ns).text
@@ -122,6 +123,7 @@ class import_job(models.Model):
                         elif (code == "MOD-CUT"):
                             next_code = True
                             custom_product = True
+                            upcharge += 50
                         else:
                             if(code == 'MOD-NO'):
                                 pass
@@ -154,6 +156,7 @@ class import_job(models.Model):
             if(custom_text != ""):
                 import_row_vals['is_custom'] = True
                 import_row_vals['custom_notes'] = custom_text
+                import_row_vals['upcharge_cost'] = upcharge
 
             #Check to see if there is a sif_sku
             sifskus = Sif_Sku.search([('sif_sku', '=', base_sku)])
