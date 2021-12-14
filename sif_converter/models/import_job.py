@@ -89,6 +89,8 @@ class import_job(models.Model):
         for lineItem in lineItems:
             sif_search_id = 0
             next_code = False
+            custom_product = False
+            custom_text = ""
             add_sku = []
             sif_options = []
             enterprise_code = lineItem.find('ofda:VendorRef', ns).text
@@ -103,8 +105,12 @@ class import_job(models.Model):
                     code = option.find('ofda:Code', ns).text
                     if (next_code):
                         next_code = False
-                        add_sku.append('-' + code)
-                        sif_options.append(code)
+                        if (custom_product):
+                            custom_product = False
+                            custom_text = code
+                        else:
+                            add_sku.append('-' + code)
+                            sif_options.append(code)
                     else:
                         if (code == 'FAB'):
                             next_code = True
@@ -113,6 +119,9 @@ class import_job(models.Model):
                         elif (code == 'WB'):
                             add_sku.append('-WB')
                             sif_options.append("WB")
+                        elif (code == "MOD-CUT"):
+                            next_code = True
+                            custom_product = True
                         else:
                             if(code == 'MOD-NO'):
                                 pass
@@ -141,6 +150,10 @@ class import_job(models.Model):
                 'vendor_code': enterprise_code,
                 'needs_matching': False
             }
+
+            if(custom_text != ""):
+                import_row_vals['is_custom'] = True
+                import_row_vals['custom_notes'] = custom_text
 
             #Check to see if there is a sif_sku
             sifskus = Sif_Sku.search([('sif_sku', '=', base_sku)])
