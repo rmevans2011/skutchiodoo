@@ -7,4 +7,4 @@ class product_attribute(models.Model):
     _order = "custom_order asc"
 
     product_display_name = fields.Char(string="Product Description")
-    custom_order = fields.Integer(string="Custom Order")
+    custom_order = fields.Integer(string="Custom Order") #allow for custom ordering of attributes
