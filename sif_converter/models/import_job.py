@@ -50,6 +50,7 @@ class import_job(models.Model):
                         'qty': line_item.qty,
                         'price_unit': product_price.list_price + line_item.upcharge_cost
                     }
+                    _logger.info(sale_order_lines)
             else:
                 if(str(line_item.product_id.id)+"p" in sale_order_lines):
                     sale_order_lines[str(line_item.product_id.id)+"p"]['qty'] += line_item.qty
