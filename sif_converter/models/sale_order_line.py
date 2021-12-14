@@ -8,6 +8,7 @@ class SaleOrderLine(models.Model):
     custom_notes = fields.Text(string="Custom Notes")
     display_description = fields.Text(string="Display Description",compute="_compute_display_description")
 
+    # Work around to show custom notes
     def _compute_display_description(self):
         for rec in self:
             if rec.custom_notes:
