@@ -72,6 +72,7 @@ class import_job(models.Model):
                 item_vals['price_unit'] = sale_order_lines.get(so)['price_unit']
             if 'custom_notes' in sale_order_lines.get(so):
                 item_vals['custom_notes'] = sale_order_lines.get(so)['custom_notes']
+            _logger.info(item_vals)
             self.env['sale.order.line'].create(item_vals)
         self.estimate_id = order.id
         self.state = 'done'
