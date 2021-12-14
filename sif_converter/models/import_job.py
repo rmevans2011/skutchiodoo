@@ -103,22 +103,22 @@ class import_job(models.Model):
                     code = option.find('ofda:Code', ns).text
                     if (next_code):
                         next_code = False
-                        add_sku.insert(0, '-' + code)
-                        sif_options.insert(0, code)
+                        add_sku.append('-' + code)
+                        sif_options.append(code)
                     else:
                         if (code == 'FAB'):
                             next_code = True
                         elif (code == 'PET'):
                             next_code = True
                         elif (code == 'WB'):
-                            add_sku.insert(0, '-WB')
-                            sif_options.insert(0, "WB")
+                            add_sku.append('-WB')
+                            sif_options.append("WB")
                         else:
                             if(code == 'MOD-NO'):
                                 pass
                             else:
-                                add_sku.insert(0,'-'+code)
-                                sif_options.insert(0, code)
+                                add_sku.append('-'+code)
+                                sif_options.append(code)
             else:
                 # Other Vendors Products
                 _logger.info("Working On other Products")
