@@ -65,8 +65,10 @@ class import_job(models.Model):
             item_vals = {
                 'order_id': order.id,
                 'product_uom_qty': sale_order_lines.get(so)['qty'],
-                'product_id': sale_order_lines.get(so)['prod_id']
+                'product_id': sale_order_lines.get(so)['prod_id'],
             }
+            if 'price_unit' in sale_order_lines.get(so):
+                item_vals['price_unit'] = sale_order_lines.get(so)['price_unit']
             self.env['sale.order.line'].create(item_vals)
         self.estimate_id = order.id
         self.state = 'done'
