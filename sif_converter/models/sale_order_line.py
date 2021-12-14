@@ -10,4 +10,7 @@ class SaleOrderLine(models.Model):
 
     def _compute_display_description(self):
         for rec in self:
-            rec.display_description = rec.product_id.computed_description
+            if rec.custom_notes:
+                rec.display_description = rec.product_id.computed_description + rec.custom_notes
+            else:
+                rec.display_description = rec.product_id.computed_description
