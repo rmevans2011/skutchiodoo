@@ -193,6 +193,8 @@ class import_job(models.Model):
                     # No default product found search for a matched product
                     if(sif_opts == ''):
                         sif_opts = False
+                    _logger.info([('sif_sku', '=', base_sku),
+                                  ('sif_options', '=', sif_opts)])
                     mp_search = Matched_Product.search([('sif_sku', '=', base_sku),
                                                         ('sif_options', '=', sif_opts)])
                     if (len(mp_search) == 0):
