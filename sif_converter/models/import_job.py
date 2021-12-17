@@ -46,10 +46,13 @@ class import_job(models.Model):
                 else:
                     product_price = self.env['product.product'].search([('id', '=', line_item.product_id.id)])
                     sale_order_lines[str(line_item.product_id.id) + "p" + line_item.custom_notes] = {
+                        'import_job_id': line_item.import_job_id,
                         'prod_id': line_item.product_id.id,
                         'qty': line_item.qty,
                         'custom_notes': '\nCustom Modifications:\n- '+line_item.custom_notes,
-                        'price_unit': product_price.list_price + line_item.upcharge_cost
+                        'price_unit': product_price.list_price + line_item.upcharge_cost,
+                        'category_code': line_item.product_id.categ_id.sort_code,
+                        'categ_header': line_item.product_id.categ_id.sale_order_name
                     }
                     _logger.info(sale_order_lines)
             else:
@@ -57,12 +60,17 @@ class import_job(models.Model):
                     sale_order_lines[str(line_item.product_id.id)+"p"]['qty'] += line_item.qty
                 else:
                     sale_order_lines[str(line_item.product_id.id)+"p"] = {
+                        'import_job_id': line_item.import_job_id,
                         'prod_id': line_item.product_id.id,
-                        'qty': line_item.qty
+                        'qty': line_item.qty,
+                        'category_code': line_item.prod_id.categ_id.sort_code,
+                        'categ_header': line_item.prod_id.categ_id.sale_order_name
                     }
 
 
         for so in sale_order_lines:
+            merged_item = self.env['import_job.merged_lines'].create(sale_order_lines.get(so))
+            _logger.info(merged_item.id)
             item_vals = {
                 'order_id': order.id,
                 'product_uom_qty': sale_order_lines.get(so)['qty'],
