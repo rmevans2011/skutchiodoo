@@ -5,6 +5,7 @@ _logger = logging.getLogger(__name__)
 class merged_lines(models.Model):
     _name = "import_job.merged_lines"
     _description = "Merged Lines"
+    _order = "category_code asc"
 
     import_job_id = fields.Many2one('sif_converter.import_job', string='Import Job')
     prod_id = fields.Many2one('product.product', string='Matched Product')
