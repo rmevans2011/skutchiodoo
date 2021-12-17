@@ -31,7 +31,7 @@
         'views/matched_product.xml',
         'views/sif_sku.xml',
         'views/sale.xml',
-        'views/sales_order.xml'
+        'views/product_category.xml'
     ],
     # only loaded in demonstration mode
     'demo': [],

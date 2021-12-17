@@ -4,3 +4,4 @@ from . import sale
 from . import matched_product
 from . import sif_sku
 from . import sale_order_line
+from . import product_category
