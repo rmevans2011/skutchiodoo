@@ -30,7 +30,8 @@
         'views/import_job.xml',
         'views/matched_product.xml',
         'views/sif_sku.xml',
-        'views/sale.xml'
+        'views/sale.xml',
+        'views/product_category.xml'
     ],
     # only loaded in demonstration mode
     'demo': [],
