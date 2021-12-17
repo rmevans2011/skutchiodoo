@@ -8,7 +8,7 @@
         <field name="arch" type="xml">
             <field name="parent_id" position="after">
                 <field name="sort_code" />
-                <field name="sort_order_name" />
+                <field name="sale_order_name" />
             </field>
         </field>
     </record>
