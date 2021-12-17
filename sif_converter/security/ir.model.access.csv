@@ -3,3 +3,4 @@ access_sif_converter_import_job,sif_converter.import_job,model_sif_converter_imp
 access_import_job_import_item_lines,import_job.import_item.lines,model_import_job_import_item_lines,,1,1,1,1
 access_sif_converter_matched_product,sif_converter.matched_product,model_sif_converter_matched_product,,1,1,1,1
 access_sif_converter_sif_sku,sif_converter.sif_sku,model_sif_converter_sif_sku,,1,1,1,1
+access_import_job_merged_lines,import_job.import_job.merged_lines,model_import_job_merged_lines,,1,1,1,1
