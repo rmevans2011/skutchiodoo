@@ -69,6 +69,7 @@ class import_job(models.Model):
 
 
         for so in sale_order_lines:
+            _logger.info(sale_order_lines.get(so))
             merged_item = self.env['import_job.merged_lines'].create(sale_order_lines.get(so))
             _logger.info(merged_item.id)
             item_vals = {
