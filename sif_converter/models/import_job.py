@@ -95,8 +95,8 @@ class import_job(models.Model):
                                                     'name': mo.categ_header})
             item_vals = {
                 'order_id': order.id,
-                'product_uom_qty': sale_order_lines.get(so)['qty'],
-                'product_id': sale_order_lines.get(so)['prod_id'],
+                'product_uom_qty': mo.qty,
+                'product_id': mo.prod_id,
             }
             if 'price_unit':
                 item_vals['price_unit'] = mo.price_unit
