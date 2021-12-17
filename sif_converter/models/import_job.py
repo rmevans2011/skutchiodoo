@@ -69,8 +69,8 @@ class import_job(models.Model):
 
 
         for so in sale_order_lines:
-            _logger.info(sale_order_lines.get(so))
             merged_item = self.env['import_job.merged_lines'].create(sale_order_lines.get(so))
+            """
             _logger.info(merged_item.id)
             item_vals = {
                 'order_id': order.id,
@@ -81,6 +81,27 @@ class import_job(models.Model):
                 item_vals['price_unit'] = sale_order_lines.get(so)['price_unit']
             if 'custom_notes' in sale_order_lines.get(so):
                 item_vals['custom_notes'] = sale_order_lines.get(so)['custom_notes']
+            _logger.info(item_vals)
+            self.env['sale.order.line'].create(item_vals)
+            """
+
+        previous_code = ""
+        merged_lines = self.env['import_job.merged_lines'].search([('import_job_id', '=', self.id)])
+        for mo in merged_lines:
+            if(mo.category_code != previous_code):
+                previous_code = mo.category_code
+                self.env['sale.order.line'].create({'order_id': order.id,
+                                                    'display_type': 'line_section',
+                                                    'name': mo.categ_header})
+            item_vals = {
+                'order_id': order.id,
+                'product_uom_qty': sale_order_lines.get(so)['qty'],
+                'product_id': sale_order_lines.get(so)['prod_id'],
+            }
+            if 'price_unit':
+                item_vals['price_unit'] = mo.price_unit
+            if 'custom_notes':
+                item_vals['custom_notes'] = mo.custom_notes
             _logger.info(item_vals)
             self.env['sale.order.line'].create(item_vals)
         self.estimate_id = order.id
