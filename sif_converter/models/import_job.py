@@ -46,7 +46,7 @@ class import_job(models.Model):
                 else:
                     product_price = self.env['product.product'].search([('id', '=', line_item.product_id.id)])
                     sale_order_lines[str(line_item.product_id.id) + "p" + line_item.custom_notes] = {
-                        'import_job_id': line_item.import_job_id,
+                        'import_job_id': line_item.import_job_id.id,
                         'prod_id': line_item.product_id.id,
                         'qty': line_item.qty,
                         'custom_notes': '\nCustom Modifications:\n- '+line_item.custom_notes,
@@ -60,7 +60,7 @@ class import_job(models.Model):
                     sale_order_lines[str(line_item.product_id.id)+"p"]['qty'] += line_item.qty
                 else:
                     sale_order_lines[str(line_item.product_id.id)+"p"] = {
-                        'import_job_id': line_item.import_job_id,
+                        'import_job_id': line_item.import_job_id.id,
                         'prod_id': line_item.product_id.id,
                         'qty': line_item.qty,
                         'category_code': line_item.product_id.categ_id.sort_code,
