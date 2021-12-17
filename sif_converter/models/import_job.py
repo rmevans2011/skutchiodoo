@@ -98,7 +98,7 @@ class import_job(models.Model):
                 'product_uom_qty': mo.qty,
                 'product_id': mo.prod_id.id,
             }
-            if 'price_unit':
+            if mo.price_unit > 0:
                 item_vals['price_unit'] = mo.price_unit
             if 'custom_notes':
                 item_vals['custom_notes'] = mo.custom_notes
