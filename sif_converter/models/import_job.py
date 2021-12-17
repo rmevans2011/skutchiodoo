@@ -63,8 +63,8 @@ class import_job(models.Model):
                         'import_job_id': line_item.import_job_id,
                         'prod_id': line_item.product_id.id,
                         'qty': line_item.qty,
-                        'category_code': line_item.prod_id.categ_id.sort_code,
-                        'categ_header': line_item.prod_id.categ_id.sale_order_name
+                        'category_code': line_item.product_id.categ_id.sort_code,
+                        'categ_header': line_item.product_id.categ_id.sale_order_name
                     }
 
 
