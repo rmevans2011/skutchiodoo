@@ -132,7 +132,7 @@ class import_job(models.Model):
         ns = {'ofda': 'http://www.ofdaxml.org/schema'}
 
         #Load Line Items
-        lineItems = tree.findall('./ofda:PurchaseOrder/ofda:OrderLineItem', ns)
+        lineItems = tree.findall('./PurchaseOrder/OrderLineItem')
 
         for lineItem in lineItems:
             sif_search_id = 0
@@ -142,16 +142,16 @@ class import_job(models.Model):
             upcharge = 0
             add_sku = []
             sif_options = []
-            enterprise_code = lineItem.find('ofda:VendorRef', ns).text
-            catalog_code = lineItem.find('ofda:SpecItem/ofda:Catalog/ofda:Code', ns).text
-            options = lineItem.findall('ofda:SpecItem/ofda:Option', ns)
-            base_sku = (lineItem.find('ofda:SpecItem/ofda:Number', ns).text).upper()
-            qty = lineItem.find('ofda:Quantity', ns).text
+            enterprise_code = lineItem.find('VendorRef').text
+            catalog_code = lineItem.find('SpecItem/Catalog/Code').text
+            options = lineItem.findall('SpecItem/Option')
+            base_sku = (lineItem.find('SpecItem/Number').text).upper()
+            qty = lineItem.find('Quantity').text
             if enterprise_code == "SKU":
                 # Skutchi Products
                 _logger.info("Working On Skutchi Product")
                 for option in options:
-                    code = option.find('ofda:Code', ns).text
+                    code = option.find('Code').text
                     if (next_code):
                         next_code = False
                         if (custom_product):
@@ -182,7 +182,7 @@ class import_job(models.Model):
                 # Other Vendors Products
                 _logger.info("Working On other Products")
                 for option in options:
-                    code = option.find('ofda:Code', ns).text
+                    code = option.find('Code').text
                     add_sku.append('-' + code)
                     sif_options.append(code)
             search_sku = base_sku + "".join(add_sku)
@@ -238,9 +238,9 @@ class import_job(models.Model):
                                 })
                             _logger.info(mfg_cat.id)
                             product = self.env['product.template'].create({
-                                'name': lineItem.find('ofda:SpecItem/ofda:Description', ns).text,
-                                'list_price': lineItem.find('ofda:Price/ofda:EndCustomerPrice', ns).text,
-                                'standard_price': lineItem.find('ofda:Price/ofda:OrderDealerPrice', ns).text,
+                                'name': lineItem.find('SpecItem/Description').text,
+                                'list_price': lineItem.find('Price/EndCustomerPrice').text,
+                                'standard_price': lineItem.find('Price/OrderDealerPrice').text,
                                 'default_code': search_sku,
                                 'hide_description': True,
                                 'categ_id': mfg_cat.id,
